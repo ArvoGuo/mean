@@ -81,13 +81,13 @@ exports.list = function(req,res){
 };
 
 ////midware for user
-//exports.signinRequired = function(req,res,next){
-//    var user = req.session.user;
-//    if(!user){
-//        return res.redirect('/signin')
-//    }
-//    next();
-//}
+exports.signinRequired = function(req,res,next){
+    var user = req.session.user;
+    if(!user){
+        return res.redirect('/signin')
+    }
+    next();
+}
 ////管理员权限认证
 ////从上面走下面，则已经登录了，无需判断是否登录
 //exports.adminRequired = function(req,res,next){
