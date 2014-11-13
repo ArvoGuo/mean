@@ -4,18 +4,10 @@ block content
     .container
         .row
             .col-md-7
-                embed(src="#{line.flash}",allowFullScreen="true",quality="high",width="720",height="600",align="middle",type="application/x-shockwave-flash")
             .col-md-5
                 dl.dl-horizontal
-                    dt 电影名字
+                    dt 业务名称
                     dd= line.title
-                    dt 导演
-                    dd= line.doctor
-                    dt 国家
-                    dd= line.country
-                    dt 语言
-                    dd= line.language
-                    dt 上映年份
-                    dd= line.year
-                    dt 简介
-                    dd= line.summary
+                    dt 业务描述
+                    dd= line.desc
+

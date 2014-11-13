@@ -3,7 +3,6 @@
  */
 var Index = require('../app/controllers/index');
 var User = require('../app/controllers/user');
-var Movie = require('../app/controllers/movie');
 var Line = require('../app/controllers/line');
 module.exports = function(app){
     //预处理用户
@@ -22,20 +21,13 @@ module.exports = function(app){
     app.get('/logout',User.logout);
     //判断登录是否中间件
     app.get('/admin/user/list',User.signinRequired,User.list);
-    //电影
-    app.get('/movie/:id',Movie.detail);
-    app.get('/admin/movie/new', User.signinRequired,Movie.new);
-    app.get('/admin/movie/update/:id',User.signinRequired,Movie.update);
-    app.post('/admin/movie',User.signinRequired,Movie.save);
-    app.get('/admin/movie/list',User.signinRequired,Movie.list);
-    app.post('/admin/movie/list',User.signinRequired,Movie.del);
     //业务线创建
     app.get('/line/:id',Line.detail);
-    app.get('/line/new',User.signinRequired,Line.new);
-    app.get('/line/update/:id',User.signinRequired,Line.update);
-    app.post('/line',User.signinRequired,Line.save);
-    app.get('/line/list',User.signinRequired,Line.list);
-    app.post('/line/list',User.signinRequired,Line.del);
+    app.get('/admin/line/new',User.signinRequired,Line.new);
+    app.get('/admin/line/update/:id',User.signinRequired,Line.update);
+    app.post('/admin/line',User.signinRequired,Line.save);
+    app.get('/admin/line/list',User.signinRequired,Line.list);
+    app.post('/admin/line/list',User.signinRequired,Line.del);
     //需求创建
 
 }

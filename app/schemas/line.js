@@ -1,14 +1,8 @@
 var mongoose = require('mongoose')
 
 var LineSchema = new mongoose.Schema({
-    doctor:String,
     title:String,
-    language:String,
-    country:String,
-    summary:String,
-    flash:String,
-    poster:String,
-    year:String,
+    desc:String,
     meta:{
         createAt:{
             type:Date,
@@ -21,7 +15,6 @@ var LineSchema = new mongoose.Schema({
     }
 })
 
-
 LineSchema.pre('save',function(next){
     if(this.isNew){
         this.meta.createAt = this.meta.updateAt = Date.now();
@@ -30,7 +23,6 @@ LineSchema.pre('save',function(next){
     }
     next();
 })
-
 
 LineSchema.statics = {
     fetch:function(cb){

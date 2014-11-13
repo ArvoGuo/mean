@@ -20,14 +20,8 @@ exports.new = function (req, res) {
     res.render('line', {
         title: '业务线创建',
         line: {
-            doctor: '',
-            country: '',
             title: '',
-            year: '',
-            poster: '',
-            language: '',
-            flash: '',
-            summary: ''
+            desc: ''
         }
     })
 };
@@ -66,14 +60,8 @@ exports.save = function (req, res) {
         })
     } else {
         _line = new Line({
-            doctor: lineObj.doctor,
-            title: lineObj.title,
-            country: lineObj.country,
-            language: lineObj.language,
-            year: lineObj.year,
-            poster: lineObj.poster,
-            summary: lineObj.summary,
-            flash: lineObj.flash
+            desc: lineObj.desc,
+            title: lineObj.title
         });
 
         _line.save(function (err, line) {
