@@ -3,11 +3,26 @@ extends ../layout
 block content
     .container
         .row
-            .col-md-7
-            .col-md-5
+            .alert.alert-success.alert-dismissible(role="alert")
+                button.close(type="button",data-dismiss="alert")
+                    span(aria-hidden="true") &times;
+                    span.sr-only Close
+                您已成功创建 #{line.title} 业务线！
+            .col-md-6.col-md-offset-2
                 dl.dl-horizontal
                     dt 业务名称
-                    dd= line.title
-                    dt 业务描述
-                    dd= line.desc
+                    dd #{line.title}
+                    dt 创建时间
+                    dd #{line.meta.createAt}
+                    dt 创建人
+                    dd
+                    dt 业务介绍
+                    dd #{line.desc}
+                    dt 业务成员
+                    dd
+                    dt
+                    dd
+                        a.btn.btn-success.btn-lg(href="#",role="button") 在此业务线上创建需求
+
+
 
