@@ -4,6 +4,7 @@
 var Index = require('../app/controllers/index');
 var User = require('../app/controllers/user');
 var Line = require('../app/controllers/line');
+var Issue = require('../app/controllers/issue');
 module.exports = function(app){
     //预处理用户
     app.use(function(req,res,next){
@@ -29,5 +30,10 @@ module.exports = function(app){
     app.get('/admin/line/list',User.signinRequired,Line.list);
     app.post('/admin/line/list',User.signinRequired,Line.del);
     //需求创建
-
+    app.get('/line/:id/issue/:id',Issue.detail);
+    app.get('/admin/issue/new',User.signinRequired,Issue.new);
+    app.get('/admin/issue/update/:id',User.signinRequired,Issue.update);
+    app.post('/admin/issue',User.signinRequired,Issue.save);
+    app.get('/admin/issue/list',User.signinRequired,Issue.list);
+    app.post('/admin/issue/list',User.signinRequired,Issue.del);
 }

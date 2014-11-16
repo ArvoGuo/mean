@@ -1,18 +1,18 @@
 extends ../layout
 block content
-    .container
-        .row
-            .col-md-8.col-md-offset-2
-                form.form-horizontal(role="form",method="post",action="/admin/line")
-                    input(type="hidden",name="line[_id]",value="#{line._id}")
-                    .form-group
-                        label.col-sm-2.control-label(for="inputTitle") 业务名称
-                        .col-sm-10
-                            input#inputTitle.form-control(type="text",name="line[title]",value="#{line.title}")
-                    .form-group
-                        label.col-sm-2.control-label(for="inputDesc") 业务描述
-                        .col-sm-10
-                             input#inputDoctor.form-control(type="text",name="line[desc]",value="#{line.desc}")
-                    .form-group
-                        .col-sm-offset-2.col-sm-10
-                            button.btn.btn-default(type="submit") 录入
+    .container.col-sm-offset-1.col-md-8
+        form.form-horizontal(role="form",method="post",action="/admin/line")
+            h3.page-header 新建业务线
+            input(type="hidden",name="line[_id]",value="#{line._id}")
+            input(type="hidden",name="line[creator]",value="#{line.creator}")
+            .form-group
+                label.col-sm-2.control-label(for="inputTitle") 业务名称
+                .col-sm-10
+                    input#inputTitle.form-control(type="text",name="line[title]",value="#{line.title}")
+            .form-group
+                label.col-sm-2.control-label(for="inputDesc") 业务描述
+                .col-sm-10
+                     input#inputDoctor.form-control(type="text",name="line[desc]",value="#{line.desc}")
+            .form-group
+                .col-sm-offset-2.col-sm-10
+                    button.btn.btn-default(type="submit") 创建

@@ -21,7 +21,8 @@ exports.new = function (req, res) {
         title: '业务线创建',
         line: {
             title: '',
-            desc: ''
+            desc: '',
+            creator:  req.session.user.name
         }
     })
 };
@@ -61,7 +62,8 @@ exports.save = function (req, res) {
     } else {
         _line = new Line({
             desc: lineObj.desc,
-            title: lineObj.title
+            title: lineObj.title,
+            creator: lineObj.creator
         });
 
         _line.save(function (err, line) {

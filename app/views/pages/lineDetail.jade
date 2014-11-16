@@ -13,16 +13,16 @@ block content
                     dt 业务名称
                     dd #{line.title}
                     dt 创建时间
-                    dd #{line.meta.createAt}
+                    dd #{moment(line.meta.updateAt).format('YYYY/MM/DD')}
                     dt 创建人
-                    dd
+                    dd #{line.creator}
                     dt 业务介绍
                     dd #{line.desc}
                     dt 业务成员
                     dd
                     dt
                     dd
-                        a.btn.btn-success.btn-lg(href="#",role="button") 在此业务线上创建需求
+                        a.btn.btn-success.btn-lg(href="/line/#{line._id}/issue/new",role="button") 在此业务线上创建需求
 
 
 

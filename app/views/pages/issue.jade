@@ -1,0 +1,59 @@
+extends ../layout
+block content
+    .container.col-sm-offset-1.col-md-8
+        form.form-horizontal(method="post" action="")
+            h3.page-header 新建需求
+            .form-group
+                label.col-sm-2.control-label 所属业务线
+                .col-sm-5
+                    input(type="text",name="belongLineName",placeholder="请输入该需求所属的业务线")
+                    input(type="hidden",name="belongLineId")
+            .form-group
+                label.col-sm-2.control-label 需求主题
+                .col-sm-10
+                    input.form-control(type="text",name="title")
+            .form-group
+                label.col-sm-2.control-label 需求描述
+                .col-sm-10
+                    textarea.form-control(type="text",name="desc",cols="30" rows="4")
+            .form-group
+                label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
+                .col-sm-5
+                    input.form-control.f-text(type="text",name="start")
+            .form-group
+                label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
+                .col-sm-5
+                    input.form-control.f-text(type="text",name="end")
+            .form-group
+                label.col-sm-2.control-label 需求状态
+                .col-sm-5
+                    select(name="condition").form-control
+                        option(value="0") 需求分析中
+                        option(value="1") PRD整理中
+                        option(value="2") 原型设计中
+                        option(value="3") 视觉稿设计中
+                        option(value="4") demo制作中
+                        option(value="5") 前后端联调中
+                        option(value="6") 测试中
+                        option(value="7") 发布
+            .form-group
+                label.col-sm-2.control-label 需求所需角色
+                .col-sm-10
+                    label.role-select
+                        input(type="checkbox",name="role",value="0")
+                        span PD
+                    label.role-select
+                        input(type="checkbox",name="role",value="1")
+                        span 设计
+                    label.role-select
+                        input(type="checkbox",name="role",value="2")
+                        span 前端
+                    label.role-select
+                        input(type="checkbox",name="role",value="3")
+                        span 开发
+                    label.role-select
+                        input(type="checkbox",name="role",value="4")
+                        span 测试
+            .form-group
+                .col-sm-offset-2.col-sm-10
+                    button.btn.btn-default(type="submit") 创建

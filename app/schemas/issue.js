@@ -1,11 +1,23 @@
+/**
+ * Created by cassie on 14/11/16.
+ */
 var mongoose = require('mongoose')
-//var Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 //作为字段的类型，也为了关联文档的查询
-//var ObjectId = Schema.Types.ObjectId;
-var LineSchema = new mongoose.Schema({
+var ObjectId = Schema.Types.ObjectId;
+var IssueSchema = new mongoose.Schema({
     creator: String,
+    belongLineName: String,
+    belongLineId: {
+        type: ObjectId,
+        ref: 'Line'
+    },
     title: String,
     desc: String,
+    start: Date,
+    end: Date,
+    condition: Number,
+    role: Number,
     meta:{
         createAt:{
             type:Date,
@@ -18,7 +30,7 @@ var LineSchema = new mongoose.Schema({
     }
 })
 
-LineSchema.pre('save',function(next){
+IssueSchema.pre('save',function(next){
     if(this.isNew){
         this.meta.createAt = this.meta.updateAt = Date.now();
     }else{
@@ -27,7 +39,7 @@ LineSchema.pre('save',function(next){
     next();
 })
 
-LineSchema.statics = {
+IssueSchema.statics = {
     fetch:function(cb){
         return this
             .find({})
@@ -41,4 +53,4 @@ LineSchema.statics = {
     }
 }
 
-module.exports = LineSchema;
+module.exports = IssueSchema;
