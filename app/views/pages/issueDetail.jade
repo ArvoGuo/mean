@@ -1,0 +1,32 @@
+extends ../layout
+block content
+    .container
+        .row
+            table.table.table-hover.table-bordered
+                thead
+                    tr
+                        th 所属业务线
+                        th 需求主题
+                        th 需求描述
+                        th 开始日期
+                        th 结束日期
+                        th 需求状态
+                        th 需求所需角色
+                        th 查看
+                        th 更新
+                        th 删除
+                tbody
+                    each issue in issues
+                        tr(class="")
+                            td
+                            td #{issue.title}
+                            td #{issue.desc}
+                            td #{issue.start}
+                            td #{issue.end}
+                            td #{issue.condition}
+                            td #{issue.role}
+                            td: a(target="_blank",href="/issue/#{issue._id}") 查看
+                            td: a(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
+                            td
+                                button.btn.btn.danger.del(type="button",data-id="#{issue._id}") 删除
+    script(src="/js/admin.js")

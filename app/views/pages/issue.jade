@@ -1,29 +1,29 @@
 extends ../layout
 block content
     .container.col-sm-offset-1.col-md-8
-        form.form-horizontal(method="post" action="")
+        form.form-horizontal(method="post" action="/admin/issue")
             h3.page-header 新建需求
             .form-group
-                label.col-sm-2.control-label 所属业务线
-                .col-sm-5
-                    input(type="text",name="belongLineName",placeholder="请输入该需求所属的业务线")
-                    input(type="hidden",name="belongLineId")
+                each item in lines
+                    label.col-sm-2.control-label 所属业务线
+                    .col-sm-5
+                        input(type="radio",name="issue[belongLineId]",value=item._id)
             .form-group
                 label.col-sm-2.control-label 需求主题
                 .col-sm-10
-                    input.form-control(type="text",name="title")
+                    input.form-control(type="text",name="issue[title]",value=issue.title)
             .form-group
                 label.col-sm-2.control-label 需求描述
                 .col-sm-10
-                    textarea.form-control(type="text",name="desc",cols="30" rows="4")
+                    textarea.form-control(type="text",,cols="30",rows="4",name="issue[desc]",value=issue.desc)
             .form-group
                 label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
                 .col-sm-5
-                    input.form-control.f-text(type="text",name="start")
+                    input.form-control.f-text(type="text",name="issue[start]",value=issue.start)
             .form-group
                 label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
                 .col-sm-5
-                    input.form-control.f-text(type="text",name="end")
+                    input.form-control.f-text(type="text",name="issue[end]",value=issue.end)
             .form-group
                 label.col-sm-2.control-label 需求状态
                 .col-sm-5
@@ -40,19 +40,19 @@ block content
                 label.col-sm-2.control-label 需求所需角色
                 .col-sm-10
                     label.role-select
-                        input(type="checkbox",name="role",value="0")
+                        input(type="checkbox",name="issue[role]",value="0")
                         span PD
                     label.role-select
-                        input(type="checkbox",name="role",value="1")
+                        input(type="checkbox",name="issue[role]",value="1")
                         span 设计
                     label.role-select
-                        input(type="checkbox",name="role",value="2")
+                        input(type="checkbox",name="issue[role]",value="2")
                         span 前端
                     label.role-select
-                        input(type="checkbox",name="role",value="3")
+                        input(type="checkbox",name="issue[role]",value="3")
                         span 开发
                     label.role-select
-                        input(type="checkbox",name="role",value="4")
+                        input(type="checkbox",name="issue[role]",value="4")
                         span 测试
             .form-group
                 .col-sm-offset-2.col-sm-10

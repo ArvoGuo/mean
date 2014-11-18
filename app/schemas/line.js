@@ -1,11 +1,15 @@
 var mongoose = require('mongoose')
-//var Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 //作为字段的类型，也为了关联文档的查询
-//var ObjectId = Schema.Types.ObjectId;
+var ObjectId = Schema.Types.ObjectId;
 var LineSchema = new mongoose.Schema({
     creator: String,
     title: String,
     desc: String,
+    issues: [{
+       type: ObjectId,
+        ref: 'Issue'
+    }],
     meta:{
         createAt:{
             type:Date,

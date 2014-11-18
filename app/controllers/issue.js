@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose');
 var Issue = require('../models/issue');
+var Line = require('../models/line');
 var _ = require('underscore');
 //业务线详情页
 exports.detail = function (req, res) {
@@ -17,19 +18,12 @@ exports.detail = function (req, res) {
 
 //业务线后台录入
 exports.new = function (req, res) {
-    res.render('issue', {
-        title: '需求创建',
-        issue: {
-            creator: req.session.user.name,
-            belongLineName: '',
-            belongLineId: '',
-            title: '',
-            desc: '',
-            start: '',
-            end: '',
-            consition: '',
-            role: ''
-        }
+    Line.find({},function(err,categories){
+        res.render('issue', {
+            title: '需求创建',
+            issue: {},
+            categories: categories,
+        })
     })
 };
 
@@ -47,40 +41,39 @@ exports.update = function (req, res) {
 };
 
 // admin post issue
-exports.save = function (req, res) {
+exports.save = function (req, res,next) {
     var id = req.body.issue._id;
     var issueObj = req.body.issue;
     var _issue;
-    if (id !== 'undefined') {
+    if (id) {
         Issue.findById(id, function (err, issue) {
             if (err) {
                 console.log(err)
             }
             _issue = _.extend(issue, issueObj);
-            _issue.save(function (err, issue) {
+            next(_issue.save(function (err, issue) {
                 if (err) {
                     console.log(err)
                 }
                 res.redirect('/issue/' + _issue.id)
-            })
+            }));
         })
     } else {
-        _issue = new Issue({
-            creator: issueObj.creator,
-            belongLineName: issueObj.belongLineName,
-            belongLineId: issueObj.belongLineId,
-            title: issueObj.title,
-            desc: issueObj.desc,
-            start: issueObj.start,
-            end: issueObj.end,
-            condition: issueObj.condition,
-            role: issueObj.role
-        });
+        _issue = new Issue(issueObj);
+        var lineId = _issue.belongLineId;
         _issue.save(function (err, issue) {
             if (err) {
                 console.log(err)
             }
-            res.redirect('/issue/' + _issue.id)
+            if (lineId) {
+                Line.findById(lineId, function(err, line) {
+                    line.issues.push(issue._id)
+                    line.save(function(err, line) {
+                        res.redirect('/issue/' + issue._id)
+                    })
+                })
+            }
+            res.redirect('/issue/' + issue._id);
         })
     }
 };

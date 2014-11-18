@@ -7,7 +7,6 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var IssueSchema = new mongoose.Schema({
     creator: String,
-    belongLineName: String,
     belongLineId: {
         type: ObjectId,
         ref: 'Line'

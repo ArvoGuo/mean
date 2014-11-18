@@ -30,7 +30,7 @@ module.exports = function(app){
     app.get('/admin/line/list',User.signinRequired,Line.list);
     app.post('/admin/line/list',User.signinRequired,Line.del);
     //需求创建
-    app.get('/line/:id/issue/:id',Issue.detail);
+    app.get('/issue/:id',Issue.detail);
     app.get('/admin/issue/new',User.signinRequired,Issue.new);
     app.get('/admin/issue/update/:id',User.signinRequired,Issue.update);
     app.post('/admin/issue',User.signinRequired,Issue.save);
