@@ -13,10 +13,10 @@ block content
                     tbody
                 each item in lines
                     tr(class="item-id-#{item._id}")
-                        td #{item.title}
+                        td #{item.name}
                         td #{item.desc}
-                        td: a(target="_blank",href="../../line/#{item._id}") 查看
-                        td: a(target="_blank",href="../line/update/#{item._id}") 修改
+                        td: a.btn.btn-info.btn-xs(target="_blank",href="../../line/#{item._id}") 查看
+                        td: a.btn.btn-success.btn-xs(target="_blank",href="../line/update/#{item._id}") 修改
                         td
-                            button.btn.btn-danger.del(type="button",data-id="#{item._id}") 删除
+                            button.btn.btn-danger.del.btn-xs(type="button",data-id="#{item._id}") 删除
     script(src="/js/admin.js")

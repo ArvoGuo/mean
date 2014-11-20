@@ -3,10 +3,11 @@ extends ../layout
 block content
     .container
         .row
-        each item in lines
-            .col-md-2
-                .thumbnail
-                    a(href="/line/#{item._id}")
-                    .caption
-                        h3 #{item.title}
-                        p: a.btn.btn-primary(href="/line/#{item._id}",role="button") 查看详情
+            h3.page-header 业务线广场
+            each item in lines
+                .col-md-2
+                    .thumbnail
+                        a(href="/line/#{item._id}")
+                        .caption
+                            h3 #{item.name}
+                            p: a.btn.btn-primary(href="/line/#{item._id}",role="button") 查看详情

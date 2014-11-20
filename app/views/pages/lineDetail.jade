@@ -7,11 +7,11 @@ block content
                 button.close(type="button",data-dismiss="alert")
                     span(aria-hidden="true") &times;
                     span.sr-only Close
-                您已成功创建 #{line.title} 业务线！
+                您已成功创建 #{line.name} 业务线！
             .col-md-6.col-md-offset-2
                 dl.dl-horizontal
                     dt 业务名称:
-                    dd #{line.title}
+                    dd #{line.name}
                     dt 创建时间:
                     dd #{moment(line.meta.updateAt).format('YYYY/MM/DD')}
                     dt 创建人:

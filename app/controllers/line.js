@@ -20,7 +20,7 @@ exports.new = function (req, res) {
     res.render('line', {
         title: '业务线创建',
         line: {
-            title: '',
+            name: '',
             desc: '',
             creator:  req.session.user.name,
             issues: ''
@@ -63,7 +63,7 @@ exports.save = function (req, res) {
     } else {
         _line = new Line({
             desc: lineObj.desc,
-            title: lineObj.title,
+            name: lineObj.name,
             creator: lineObj.creator
         });
         //改成下面，对应的jade value也需要改

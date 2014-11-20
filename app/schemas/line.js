@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var LineSchema = new mongoose.Schema({
     creator: String,
-    title: String,
+    name: String,
     desc: String,
     issues: [{
        type: ObjectId,

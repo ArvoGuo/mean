@@ -10,11 +10,11 @@ block content
                 each line in lines
                     label.radio-inline
                         input(type="radio",name="issue[belongLineId]",value=line._id)
-                        | #{line.title}
+                        | #{line.name}
             .form-group
                 label.col-sm-2.control-label 需求主题
                 .col-sm-10
-                    input.form-control(type="text",name="issue[title]",value=issue.title)
+                    input.form-control(type="text",name="issue[name]",value=issue.name)
             .form-group
                 label.col-sm-2.control-label 需求描述
                 .col-sm-10
@@ -44,19 +44,19 @@ block content
                 .col-sm-10
                     label.role-select
                         input(type="checkbox",name="issue[role]",value="0")
-                        span PD
+                        span(style="margin-left:5px") PD
                     label.role-select
-                        input(type="checkbox",name="issue[role]",value="1")
-                        span 设计
+                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="1")
+                        span(style="margin-left:5px") 设计
                     label.role-select
-                        input(type="checkbox",name="issue[role]",value="2")
-                        span 前端
+                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="2")
+                        span(style="margin-left:5px") 前端
                     label.role-select
-                        input(type="checkbox",name="issue[role]",value="3")
-                        span 开发
+                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="3")
+                        span(style="margin-left:5px") 开发
                     label.role-select
-                        input(type="checkbox",name="issue[role]",value="4")
-                        span 测试
+                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="4")
+                        span(style="margin-left:5px") 测试
             .form-group
                 .col-sm-offset-2.col-sm-10
                     button.btn.btn-default(type="submit") 创建

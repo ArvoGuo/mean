@@ -13,7 +13,7 @@ exports.detail = function (req, res) {
             //在line集合中查找issues字段id和issue集合的id相同的line
             //使用findOne,只取最后插入的一条
             .findOne({_id:id})
-            .populate('belongLineId','title')
+            .populate('belongLineId','name')
             .exec(function(err,issue){
                 console.log('lines:')
                 console.log(lines);
@@ -35,9 +35,8 @@ exports.new = function (req, res) {
             title: '需求创建',
             issue: {
                 creator: req.session.user._id,
-                title: '',
                 belongLineId: '',
-                title: '',
+                name: '',
                 desc: '',
                 start: '',
                 end: '',

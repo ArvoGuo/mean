@@ -11,7 +11,7 @@ var IssueSchema = new Schema({
         type: ObjectId,
         ref: 'Line'
     },
-    title: String,
+    name: String,
     desc: String,
     start: Date,
     end: Date,

@@ -17,8 +17,8 @@ block content
                         th 删除
                 tbody
                     tr(class="")
-                        td #{issue.belongLineId.title}
-                        td #{issue.title}
+                        td #{issue.belongLineId.name}
+                        td #{issue.name}
                         td #{issue.desc}
                         td #{moment(issue.start).format('YYYY/MM/DD')}
                         td #{moment(issue.end).format('YYYY/MM/DD')}
@@ -51,10 +51,10 @@ block content
                                     code 开发
                                 if val == "4"
                                     code 测试
-                        td: a(target="_blank",href="/issue/#{issue._id}") 查看
-                        td: a(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
+                        td: a.btn.btn-info.btn-xs(target="_blank",href="/issue/#{issue._id}") 查看
+                        td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
                         td
-                            button.btn.btn-danger.del(type="button",data-id="#{issue._id}") 删除
+                            button.btn.btn-danger.del.btn-xs(type="button",data-id="#{issue._id}") 删除
     script(src="/js/admin.js")
 
 
