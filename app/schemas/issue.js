@@ -16,7 +16,7 @@ var IssueSchema = new Schema({
     start: Date,
     end: Date,
     condition: Number,
-    role: Number,
+    role: [],  //需求所需角色为数组
     meta:{
         createAt:{
             type:Date,

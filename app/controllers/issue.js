@@ -8,11 +8,13 @@ var _ = require('underscore');
 //需求详情页
 exports.detail = function (req, res) {
     var id = req.params.id;
-    Issue.findById(id, function (err, issue) {
-        Line
-            .find({issues:id})
+    Line.find({issues:id}, function (err, lines) {
+        Issue
+            //在line集合中查找issues字段id和issue集合的id相同的line
+            //使用findOne,只取最后插入的一条
+            .findOne({_id:id})
             .populate('belongLineId','title')
-            .exec(function(err,lines){
+            .exec(function(err,issue){
                 console.log('lines:')
                 console.log(lines);
                 console.log('issue:');
