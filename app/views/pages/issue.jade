@@ -2,12 +2,15 @@ extends ../layout
 block content
     .container.col-sm-offset-1.col-md-8
         form.form-horizontal(method="post" action="/admin/issue")
+            if issue._id
+                input(type="hidden",name="issue[_id]",value=issue._id)
             h3.page-header 新建需求
             .form-group
-                each item in lines
-                    label.col-sm-2.control-label 所属业务线
-                    .col-sm-5
-                        input(type="radio",name="issue[belongLineId]",value=item._id)
+                label.col-sm-2.control-label 所属业务线
+                each line in lines
+                    label.radio-inline
+                        input(type="radio",name="issue[belongLineId]",value=line._id)
+                        | #{line.title}
             .form-group
                 label.col-sm-2.control-label 需求主题
                 .col-sm-10

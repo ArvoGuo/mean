@@ -5,29 +5,49 @@ var mongoose = require('mongoose');
 var Issue = require('../models/issue');
 var Line = require('../models/line');
 var _ = require('underscore');
-//业务线详情页
+//需求详情页
 exports.detail = function (req, res) {
     var id = req.params.id;
     Issue.findById(id, function (err, issue) {
-        res.render('issueDetail', {
-            title: issue.title,
-            issue: issue
-        })
+        Line
+            .find({issues:id})
+            .populate('belongLineId','title')
+            .exec(function(err,lines){
+                console.log('lines:')
+                console.log(lines);
+                console.log('issue:');
+                console.log(issue);
+                res.render('issueDetail', {
+                    title: issue.title,
+                    lines: lines,
+                    issue: issue
+                })
+            })
     })
 };
 
-//业务线后台录入
+//需求后台录入
 exports.new = function (req, res) {
-    Line.find({},function(err,categories){
+    Line.find({},function(err,lines){
         res.render('issue', {
             title: '需求创建',
-            issue: {},
-            categories: categories,
+            issue: {
+                creator: req.session.user._id,
+                title: '',
+                belongLineId: '',
+                title: '',
+                desc: '',
+                start: '',
+                end: '',
+                condition: '',
+                role: ''
+            },
+            lines: lines
         })
     })
 };
 
-//业务线更新
+//需求更新
 exports.update = function (req, res) {
     var id = req.params.id;
     if (id) {
@@ -73,12 +93,12 @@ exports.save = function (req, res,next) {
                     })
                 })
             }
-            res.redirect('/issue/' + issue._id);
+            //res.redirect('/issue/' + issue._id);
         })
     }
 };
 
-//业务线列表页
+//需求列表页
 exports.list = function (req, res) {
     Issue.fetch(function (err, issues) {
         if (err) {
@@ -91,7 +111,7 @@ exports.list = function (req, res) {
     })
 };
 
-//删除该业务线
+//删除该需求
 //所有put/delete方法都可以使用post方法
 exports.del = function(req,res){
     var id = req.query.id;

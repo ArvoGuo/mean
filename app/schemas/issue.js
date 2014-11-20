@@ -5,7 +5,7 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 //作为字段的类型，也为了关联文档的查询
 var ObjectId = Schema.Types.ObjectId;
-var IssueSchema = new mongoose.Schema({
+var IssueSchema = new Schema({
     creator: String,
     belongLineId: {
         type: ObjectId,

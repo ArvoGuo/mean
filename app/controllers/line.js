@@ -22,7 +22,8 @@ exports.new = function (req, res) {
         line: {
             title: '',
             desc: '',
-            creator:  req.session.user.name
+            creator:  req.session.user.name,
+            issues: ''
         }
     })
 };
@@ -60,12 +61,7 @@ exports.save = function (req, res) {
             })
         })
     } else {
-        _line = new Line({
-            desc: lineObj.desc,
-            title: lineObj.title,
-            creator: lineObj.creator
-        });
-
+        _line = new Line(lineObj);
         _line.save(function (err, line) {
             if (err) {
                 console.log(err)
