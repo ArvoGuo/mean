@@ -20,8 +20,8 @@ block content
                         td #{issue.belongLineId.title}
                         td #{issue.title}
                         td #{issue.desc}
-                        td #{issue.start}
-                        td #{issue.end}
+                        td #{moment(issue.start).format('YYYY/MM/DD')}
+                        td #{moment(issue.end).format('YYYY/MM/DD')}
                         td #{issue.condition}
                         td #{issue.role}
                         td: a(target="_blank",href="/issue/#{issue._id}") 查看
@@ -29,3 +29,5 @@ block content
                         td
                             button.btn.btn.danger.del(type="button",data-id="#{issue._id}") 删除
     script(src="/js/admin.js")
+
+

@@ -61,7 +61,13 @@ exports.save = function (req, res) {
             })
         })
     } else {
-        _line = new Line(lineObj);
+        _line = new Line({
+            desc: lineObj.desc,
+            title: lineObj.title,
+            creator: lineObj.creator
+        });
+        //改成下面，对应的jade value也需要改
+        //_line = new Line(lineObj);
         _line.save(function (err, line) {
             if (err) {
                 console.log(err)
