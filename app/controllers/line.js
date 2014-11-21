@@ -7,12 +7,16 @@ var _ = require('underscore');
 //业务线详情页
 exports.detail = function (req, res) {
     var id = req.params.id;
-    Line.findById(id, function (err, line) {
-        res.render('lineDetail', {
-            title: line.title,
-            line: line
+    Line
+        .findOne({_id:id})
+        .populate('issues','name')
+        .exec(function(err,line){
+            if(err) console.log(err)
+            res.render('lineDetail',{
+                title: line.name,
+                line: line
+            })
         })
-    })
 };
 
 //业务线后台录入

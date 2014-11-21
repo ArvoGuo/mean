@@ -21,7 +21,9 @@ block content
                     dt 已创建的需求
                     dd
                         if(line.issues)
-                            a #{line.issues}
+                            each issue in line.issues
+                                p
+                                    a(href="/issue/#{issue._id}") #{issue.name}
                     dt 业务成员:
                     dd
                     dt

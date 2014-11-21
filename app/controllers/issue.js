@@ -20,7 +20,7 @@ exports.detail = function (req, res) {
                 console.log('issue:');
                 console.log(issue);
                 res.render('issueDetail', {
-                    title: issue.title,
+                    title: issue.name,
                     lines: lines,
                     issue: issue
                 })
@@ -101,15 +101,18 @@ exports.save = function (req, res,next) {
 
 //需求列表页
 exports.list = function (req, res) {
-    Issue.fetch(function (err, issues) {
-        if (err) {
-            console.log(err)
-        }
-        res.render('issueList', {
-            title: '业务线列表页',
-            issues: issues
+    Issue
+        .find({})
+        .populate('belongLineId','name')
+        .exec(function(err,issues){
+            if(err){
+                console.log(err)
+            }
+            res.render('issueList',{
+                title: '业务线列表页',
+                issues: issues
+            })
         })
-    })
 };
 
 //删除该需求
