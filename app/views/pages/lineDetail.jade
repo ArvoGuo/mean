@@ -20,15 +20,17 @@ block content
                     dd #{line.desc}
                     dt 已创建的需求
                     dd
-                        if(line.issues)
+                        if line.issues
                             each issue in line.issues
                                 p
                                     a(href="/issue/#{issue._id}") #{issue.name}
+                        else
+                            p 该业务线上还未创建任何需求
                     dt 业务成员:
                     dd
-                    dt
-                    dd
-                        a.btn.btn-success.btn-lg(href="/line/#{line._id}/issue/new",role="button") 在此业务线上创建需求
+                    //dt
+                    //dd
+                        //a.btn.btn-success.btn-lg(href="/line/#{line._id}/issue/new",role="button") 在此业务线上创建需求
 
 
 

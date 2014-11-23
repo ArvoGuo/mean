@@ -17,7 +17,7 @@ block content
                         th 删除
                 tbody
                 each issue in issues
-                    tr(class="")
+                    tr(class="issue-id-#{issue._id}")
                         td #{issue.belongLineId.name}
                         td #{issue.name}
                         td #{issue.desc}
@@ -56,4 +56,4 @@ block content
                         td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
                         td
                             button.btn.btn-danger.del.btn-xs(type="button",data-id="#{issue._id}") 删除
-    script(src="/js/admin.js")
+    script(src="/js/delIssue.js")

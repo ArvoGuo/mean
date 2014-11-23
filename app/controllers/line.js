@@ -11,6 +11,8 @@ exports.detail = function (req, res) {
         .findOne({_id:id})
         .populate('issues','name')
         .exec(function(err,line){
+            console.log('line:');
+            console.log(line);
             if(err) console.log(err)
             res.render('lineDetail',{
                 title: line.name,

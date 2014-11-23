@@ -53,9 +53,14 @@ exports.update = function (req, res) {
     var id = req.params.id;
     if (id) {
         Issue.findById(id, function (err, issue) {
-            res.render('issue', {
-                title: '需求更新页面',
-                issue: issue
+            Line.find({},function(err,lines){
+                console.log('issue:');
+                console.log(issue);
+                res.render('issue', {
+                    title: '需求更新页面',
+                    issue: issue,
+                    lines: lines
+                })
             })
         })
     }
@@ -72,12 +77,12 @@ exports.save = function (req, res,next) {
                 console.log(err)
             }
             _issue = _.extend(issue, issueObj);
-            next(_issue.save(function (err, issue) {
+            _issue.save(function (err, issue) {
                 if (err) {
                     console.log(err)
                 }
                 res.redirect('/issue/' + _issue.id)
-            }));
+            });
         })
     } else {
         _issue = new Issue(issueObj);
@@ -98,6 +103,7 @@ exports.save = function (req, res,next) {
         })
     }
 };
+
 
 //需求列表页
 exports.list = function (req, res) {

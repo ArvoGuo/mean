@@ -3,14 +3,21 @@ block content
     .container.col-sm-offset-1.col-md-8
         form.form-horizontal(method="post" action="/admin/issue")
             if issue._id
+                h3.page-header 编辑需求
                 input(type="hidden",name="issue[_id]",value=issue._id)
-            h3.page-header 新建需求
+            else
+                h3.page-header 新建需求
             .form-group
                 label.col-sm-2.control-label 所属业务线
                 each line in lines
-                    label.radio-inline
-                        input(type="radio",name="issue[belongLineId]",value=line._id)
-                        | #{line.name}
+                    if issue.belongLineId == line.id
+                        label.radio-inline
+                            input(type="radio",name="issue[belongLineId]",value=line._id,checked)
+                            | #{line.name}
+                    else
+                        label.radio-inline
+                            input(type="radio",name="issue[belongLineId]",value=line._id)
+                            | #{line.name}
             .form-group
                 label.col-sm-2.control-label 需求主题
                 .col-sm-10
@@ -18,15 +25,25 @@ block content
             .form-group
                 label.col-sm-2.control-label 需求描述
                 .col-sm-10
-                    textarea.form-control(type="text",,cols="30",rows="4",name="issue[desc]",value=issue.desc)
-            .form-group
-                label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
-                .col-sm-5
-                    input.form-control.f-text(type="text",name="issue[start]",value=issue.start)
-            .form-group
-                label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
-                .col-sm-5
-                    input.form-control.f-text(type="text",name="issue[end]",value=issue.end)
+                    textarea.form-control(type="text",cols="30",rows="4",name="issue[desc]",value=issue.desc) #{issue.desc}
+            if issue._id
+                .form-group
+                    label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
+                    .col-sm-5
+                        input.form-control.f-text(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY/MM/DD')}")
+                .form-group
+                    label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
+                    .col-sm-5
+                        input.form-control.f-text(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY/MM/DD')}")
+            else
+                .form-group
+                    label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
+                    .col-sm-5
+                        input.form-control.f-text(type="text",name="issue[start]",value=issue.start)
+                .form-group
+                    label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
+                    .col-sm-5
+                        input.form-control.f-text(type="text",name="issue[end]",value=issue.end)
             .form-group
                 label.col-sm-2.control-label 需求状态
                 .col-sm-5
@@ -59,4 +76,4 @@ block content
                         span(style="margin-left:5px") 测试
             .form-group
                 .col-sm-offset-2.col-sm-10
-                    button.btn.btn-default(type="submit") 创建
+                    button.btn.btn-default(type="submit") 保存
