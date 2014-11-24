@@ -6,6 +6,10 @@ var LineSchema = new mongoose.Schema({
     creator: String,
     name: String,
     desc: String,
+    members: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
     issues: [{
        type: ObjectId,
         ref: 'Issue'

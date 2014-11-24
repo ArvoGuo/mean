@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose');
 var Line = require('../models/line');
+var User = require('../models/user');
 var _ = require('underscore');
 //业务线详情页
 exports.detail = function (req, res) {
@@ -10,6 +11,7 @@ exports.detail = function (req, res) {
     Line
         .findOne({_id:id})
         .populate('issues','name')
+        .populate('members','name')
         .exec(function(err,line){
             console.log('line:');
             console.log(line);
@@ -23,14 +25,18 @@ exports.detail = function (req, res) {
 
 //业务线后台录入
 exports.new = function (req, res) {
-    res.render('line', {
-        title: '业务线创建',
-        line: {
-            name: '',
-            desc: '',
-            creator:  req.session.user.name,
-            issues: ''
-        }
+    User.find({},function(err,users){
+        res.render('line', {
+            title: '业务线创建',
+            line: {
+                name: '',
+                desc: '',
+                creator:  req.session.user.name,
+                issues: '',
+                members: ''
+            },
+            users: users
+        })
     })
 };
 
@@ -70,7 +76,8 @@ exports.save = function (req, res) {
         _line = new Line({
             desc: lineObj.desc,
             name: lineObj.name,
-            creator: lineObj.creator
+            creator: lineObj.creator,
+            members: lineObj.members
         });
         //改成下面，对应的jade value也需要改
         //_line = new Line(lineObj);

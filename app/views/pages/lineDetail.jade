@@ -28,6 +28,9 @@ block content
                             p 该业务线上还未创建任何需求
                     dt 业务成员:
                     dd
+                        if line.members
+                            each member in line.members
+                                span #{member.name}&nbsp;&nbsp;
                     //dt
                     //dd
                         //a.btn.btn-success.btn-lg(href="/line/#{line._id}/issue/new",role="button") 在此业务线上创建需求
