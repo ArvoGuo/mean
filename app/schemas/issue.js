@@ -6,7 +6,10 @@ var Schema = mongoose.Schema;
 //作为字段的类型，也为了关联文档的查询
 var ObjectId = Schema.Types.ObjectId;
 var IssueSchema = new Schema({
-    creator: String,
+    creator: {
+        type: ObjectId,
+        ref: 'User'
+    },
     belongLineId: {
         type: ObjectId,
         ref: 'Line'

@@ -12,6 +12,7 @@ exports.detail = function (req, res) {
         .findOne({_id:id})
         .populate('issues','name')
         .populate('members','name')
+        .populate('creator','name')
         .exec(function(err,line){
             console.log('line:');
             console.log(line);
@@ -31,7 +32,7 @@ exports.new = function (req, res) {
             line: {
                 name: '',
                 desc: '',
-                creator:  req.session.user.name,
+                creator:  req.session.user._id,
                 issues: '',
                 members: ''
             },
