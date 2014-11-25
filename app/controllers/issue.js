@@ -14,6 +14,7 @@ exports.detail = function (req, res) {
             //使用findOne,只取最后插入的一条
             .findOne({_id:id})
             .populate('belongLineId','name')
+            .populate('creator','name')
             .exec(function(err,issue){
                 console.log('lines:')
                 console.log(lines);

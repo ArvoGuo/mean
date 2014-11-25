@@ -18,7 +18,7 @@ block content
                 .col-sm-10
                     each user in users
                         label.role-select
-                            input(type="checkbox",name="line[members]",value="#{user._id}")
+                            input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}")
                             span(style="margin-left:5px") #{user.name}
             .form-group
                 .col-sm-offset-2.col-sm-10
