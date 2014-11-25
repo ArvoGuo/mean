@@ -36,4 +36,6 @@ module.exports = function(app){
     app.post('/admin/issue',User.signinRequired,Issue.save);
     app.get('/admin/issue/list',User.signinRequired,Issue.list);
     app.post('/admin/issue/list',User.signinRequired,Issue.del);
+    //我的主页
+    app.get('/admin/line/list/my',User.signinRequired,Issue.my);
 }

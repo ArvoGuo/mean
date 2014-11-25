@@ -1,0 +1,24 @@
+extends ../layout
+block content
+    .container.col-sm-offset-1.col-md-8
+        .row
+            form.form-horizontal(role="search")
+                label.col-sm-2.col-sm-offset-2.control-label 输入业务线名称
+                .col-sm-8
+                    input.form-control(type="text")
+            .tabbable.view
+                ul.nav.nav-tabs
+                    li.active
+                        a(href="#panel-1",data-toggle="tab") 我认领的
+                    li
+                        a(href="#panel-2",data-toggle="tab") 未认领的
+                .tab-content
+                    .tab-pane.active(id="panel-1")
+                        p 我认领的内容
+                    .tab-pane(id="panel-2")
+                        p 认领的内容
+
+
+
+
+

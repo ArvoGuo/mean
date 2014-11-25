@@ -21,8 +21,8 @@ block content
                         td #{issue.belongLineId.name}
                         td #{issue.name}
                         td #{issue.desc}
-                        td #{moment(issue.start).format('YYYY/MM/DD')}
-                        td #{moment(issue.end).format('YYYY/MM/DD')}
+                        td #{moment(issue.start).format('YYYY-MM-DD')}
+                        td #{moment(issue.end).format('YYYY-MM-DD')}
                         td
                             if issue.condition == "0"
                                 code 需求分析中

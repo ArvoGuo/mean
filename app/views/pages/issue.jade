@@ -31,11 +31,11 @@ block content
                 .form-group
                     label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
                     .col-sm-5
-                        input.form-control.f-text(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY/MM/DD')}")
+                        input.form-control.f-text(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY-MM-DD')}")
                 .form-group
                     label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
                     .col-sm-5
-                        input.form-control.f-text(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY/MM/DD')}")
+                        input.form-control.f-text(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY-MM-DD')}")
             else
                 .form-group
                     label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
@@ -49,34 +49,76 @@ block content
                 label.col-sm-2.control-label 需求状态
                 .col-sm-5
                     select(name="issue[condition]").form-control
-                        option(value="0") 需求分析中
-                        option(value="1") PRD整理中
-                        option(value="2") 原型设计中
-                        option(value="3") 视觉稿设计中
-                        option(value="4") demo制作中
-                        option(value="5") 前后端联调中
-                        option(value="6") 测试中
-                        option(value="7") 发布
+                        if issue.condition == 0
+                            option(value="0" selected) 需求分析中
+                        else
+                            option(value="0") 需求分析中
+                        if issue.condition == 1
+                            option(value="1" selected) PRD整理中
+                        else
+                            option(value="1") PRD整理中
+                        if issue.condition == 2
+                            option(value="2" selected) 原型设计中
+                        else
+                            option(value="2") 原型设计中
+                        if issue.condition == 3
+                            option(value="3" selected) 视觉稿设计中
+                        else
+                            option(value="3") 视觉稿设计中
+                        if issue.condition == 4
+                            option(value="4" selected) demo制作中
+                        else
+                            option(value="4") demo制作中
+                        if issue.condition == 5
+                            option(value="5" selected) 前后端联调中
+                        else
+                            option(value="5") 前后端联调中
+                        if issue.condition == 6
+                            option(value="6" selected) 测试中
+                        else
+                            option(value="6") 测试中
+                        if issue.condition == 7
+                            option(value="7" selected) 发布
+                        else
+                            option(value="7") 发布
             .form-group
                 label.col-sm-2.control-label 需求所需角色
                 .col-sm-10
                     label.role-select
-                        input(type="checkbox",name="issue[role]",value="0")
+                        if (issue.role[0] == 0)
+                            input(type="checkbox",name="issue[role]",value="0",checked)
+                        else
+                            input(type="checkbox",name="issue[role]",value="0")
                         span(style="margin-left:5px") PD
                     label.role-select
-                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="1")
+                        if (issue.role[0] == 1||issue.role[1] == 1)
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="1",checked)
+                        else
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="1")
                         span(style="margin-left:5px") 交互
                     label.role-select
-                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="2")
+                        if (issue.role[0] == 2 ||issue.role[1] == 2||issue.role[2] == 2)
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="2",checked)
+                        else
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="2")
                         span(style="margin-left:5px") 视觉
                     label.role-select
-                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="3")
+                        if (issue.role[0] == 3 ||issue.role[1] == 3||issue.role[2] == 3||issue.role[3] == 3)
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="3",checked)
+                        else
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="3")
                         span(style="margin-left:5px") 前端
                     label.role-select
-                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="4")
+                        if (issue.role[0] == 4||issue.role[1] == 4||issue.role[2] == 4||issue.role[3] == 4||issue.role[4] == 4)
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="4",checked)
+                        else
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="4")
                         span(style="margin-left:5px") 开发
                     label.role-select
-                        input(style="margin-left:20px",type="checkbox",name="issue[role]",value="5")
+                        if (issue.role[0] == 5||issue.role[1] == 5||issue.role[2] == 5||issue.role[3] == 5||issue.role[4] == 5||issue.role[5] == 5)
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="5",checked)
+                        else
+                            input(style="margin-left:20px",type="checkbox",name="issue[role]",value="5")
                         span(style="margin-left:5px") 测试
             .form-group
                 .col-sm-offset-2.col-sm-10

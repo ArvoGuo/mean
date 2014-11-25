@@ -137,3 +137,8 @@ exports.del = function(req,res){
         })
     }
 };
+
+//我的主页-需求列表
+exports.my = function(req,res){
+    res.render('myIssueList',{})
+};
