@@ -16,10 +16,6 @@ exports.detail = function (req, res) {
             .populate('belongLineId','name')
             .populate('creator','name')
             .exec(function(err,issue){
-                console.log('lines:')
-                console.log(lines);
-                console.log('issue:');
-                console.log(issue);
                 res.render('issueDetail', {
                     title: issue.name,
                     lines: lines,
@@ -55,8 +51,6 @@ exports.update = function (req, res) {
     if (id) {
         Issue.findById(id, function (err, issue) {
             Line.find({},function(err,lines){
-                console.log('issue:');
-                console.log(issue);
                 res.render('issue', {
                     title: '需求更新页面',
                     issue: issue,
@@ -94,7 +88,9 @@ exports.save = function (req, res,next) {
             }
             if (lineId) {
                 Line.findById(lineId, function(err, line) {
-                    line.issues.push(issue._id)
+                    console.log('lineType:'+typeof(line));
+                    console.log('line.issues:'+line.issues);
+                    line.issues.push(issue._id);
                     line.save(function(err, line) {
                         res.redirect('/issue/' + issue._id)
                     })
@@ -127,12 +123,24 @@ exports.list = function (req, res) {
 exports.del = function(req,res){
     var id = req.query.id;
     if(id){
+        Issue.findById(id,function(err,issue){
+            Line.find({issues:id},function(err,line){
+                console.log('issue:'+issue);
+                console.log('line:'+line);
+                console.log('line.desc:'+line.desc);
+                console.log('line.issues:'+line.issues);
+                //line.issues.pop(issue._id);
+                console.log('issue.belongLineId:'+issue.belongLineId);
+                Line.update({_id:issue.belongLineId},{$pull:{issues:issue._id}},{safe:true});
+                console.log('linenew:'+line);
+            })
+        })
         Issue.remove({_id: id},function(err,issue){
             if(err){
                 console.log(err)
             }
             else{
-                res.json({success:1})
+                res.json({success:1});
             }
         })
     }
@@ -140,5 +148,11 @@ exports.del = function(req,res){
 
 //我的主页-需求列表
 exports.my = function(req,res){
-    res.render('myIssueList',{})
+    Issue.find({},function(err,issues){
+        res.render('myIssueList',{
+            title: '我的需求列表',
+            issues: issues
+        })
+
+    })
 };
