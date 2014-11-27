@@ -20,6 +20,16 @@ var IssueSchema = new Schema({
     end: Date,
     condition: Number,
     role: [],  //需求所需角色为数组
+    allocate: [
+        {
+            roleType: Number,
+            allocated: Boolean,
+            memberId: {
+                type: ObjectId,
+                ref: 'User'
+            }
+        }
+    ],
     meta:{
         createAt:{
             type:Date,

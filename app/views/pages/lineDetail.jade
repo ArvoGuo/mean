@@ -30,9 +30,11 @@ block content
                         if line.members
                             each member in line.members
                                 span #{member.name}&nbsp;&nbsp;
-                    //dt
-                    //dd
-                        //a.btn.btn-success.btn-lg(href="/line/#{line._id}/issue/new",role="button") 在此业务线上创建需求
+                    dt
+                        a.btn.btn-success.btn-xs(href="/admin/line/update/#{line._id}") 修改
+                    dd
+                        button.btn.btn-danger.del.btn-xs(type="button",data-id="#{line._id}") 删除
+
 
 
 

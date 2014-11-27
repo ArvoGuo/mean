@@ -2,7 +2,7 @@ extends ../layout
 block content
     .container.col-sm-offset-1.col-md-8
         form.form-horizontal(role="form",method="post",action="/admin/line")
-            h3.page-header 新建业务线
+            h3.page-header #{title}
             input(type="hidden",name="line[_id]",value="#{line._id}")
             input(type="hidden",name="line[creator]",value="#{line.creator}")
             .form-group
@@ -18,8 +18,18 @@ block content
                 .col-sm-10
                     each user in users
                         label.role-select
-                            input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}")
-                            span(style="margin-left:5px") #{user.name}
+                            if line._id
+                                - for (var i=0;i<line.members.length;++i)
+                                    if line.members[i]
+                                        if ((line.members[i]).toString() === (user._id).toString())
+                                            input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}",checked)
+                                        else
+                                            input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}")
+                                span(style="margin-left:5px") #{user.name}
+                            else
+                                input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}")
+                                span(style="margin-left:5px") #{user.name}
+
             .form-group
                 .col-sm-offset-2.col-sm-10
                     button.btn.btn-default(type="submit") 创建

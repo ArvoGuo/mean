@@ -28,7 +28,7 @@ exports.detail = function (req, res) {
 exports.new = function (req, res) {
     User.find({},function(err,users){
         res.render('line', {
-            title: '业务线创建',
+            title: '新建业务线',
             line: {
                 name: '',
                 desc: '',
@@ -46,10 +46,14 @@ exports.update = function (req, res) {
     var id = req.params.id;
     if (id) {
         Line.findById(id, function (err, line) {
-            res.render('line', {
-                title: '业务线更新页面',
-                line: line
-            })
+            User.find({}, function (err, users) {
+                    res.render('line', {
+                        title: '更新业务线',
+                        line: line,
+                        users: users
+                    })
+                }
+            )
         })
     }
 };

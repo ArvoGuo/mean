@@ -27,6 +27,7 @@ exports.detail = function (req, res) {
 
 //需求后台录入
 exports.new = function (req, res) {
+    var id = req.param.id;
     Line.find({},function(err,lines){
         res.render('issue', {
             title: '需求创建',
@@ -38,10 +39,13 @@ exports.new = function (req, res) {
                 start: '',
                 end: '',
                 condition: '',
-                role: ''
+                role: '',
+                allocate: ''
             },
             lines: lines
         })
+        console.log('id:'+id);
+    //Issue.update({"_id":id},)
     })
 };
 
@@ -125,14 +129,12 @@ exports.del = function(req,res){
     if(id){
         Issue.findById(id,function(err,issue){
             Line.find({issues:id},function(err,line){
-                console.log('issue:'+issue);
                 console.log('line:'+line);
-                console.log('line.desc:'+line.desc);
-                console.log('line.issues:'+line.issues);
-                //line.issues.pop(issue._id);
-                console.log('issue.belongLineId:'+issue.belongLineId);
+                console.log('issue:'+issue);
+                console.log('line[0]:'+line[0]);
+                console.log('issue._id:'+issue._id);
+                line[0].issues.pull(issue._id);
                 Line.update({_id:issue.belongLineId},{$pull:{issues:issue._id}},{safe:true});
-                console.log('linenew:'+line);
             })
         })
         Issue.remove({_id: id},function(err,issue){
@@ -148,11 +150,23 @@ exports.del = function(req,res){
 
 //我的主页-需求列表
 exports.my = function(req,res){
-    Issue.find({},function(err,issues){
-        res.render('myIssueList',{
-            title: '我的需求列表',
-            issues: issues
+    //查找我所在的业务线，罗列出所有需求
+    var userId = req.session.user._id;
+    //如果登陆者在业务线内
+    if (userId){
+        Line.find({members:userId},function(err,line){
+            var lineId = line[0]._id;
+            Issue.find({belongLineId:lineId},function(err,issues){
+                console.log('line:'+line);
+                console.log('lineId:'+lineId);
+                console.log('issues:'+issues);
+                res.render('myIssueList',{
+                    title: '我的需求列表',
+                    issues: issues
+                })
+            })
         })
-
-    })
-};
+    }
+    else {
+    }
+}
