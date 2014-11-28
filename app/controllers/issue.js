@@ -44,8 +44,7 @@ exports.new = function (req, res) {
             },
             lines: lines
         })
-        console.log('id:'+id);
-    //Issue.update({"_id":id},)
+
     })
 };
 
@@ -69,7 +68,10 @@ exports.update = function (req, res) {
 exports.save = function (req, res,next) {
     var id = req.body.issue._id;
     var issueObj = req.body.issue;
+    var role = issueObj.role;
+    var roleLength = issueObj.role.length;
     var _issue;
+    //如果已创建issue,在这里修改
     if (id) {
         Issue.findById(id, function (err, issue) {
             if (err) {
@@ -80,27 +82,41 @@ exports.save = function (req, res,next) {
                 if (err) {
                     console.log(err)
                 }
-                res.redirect('/issue/' + _issue.id)
+                res.redirect('/issue/' + _issue.id);
+                //在issue集合里插入allocate字段
+                for(var i=0;i<roleLength;i++){
+                    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
+                }
+                for(var i=0;i<(roleLength-1);i++){
+                    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
+                }
             });
-        })
-    } else {
+        });
+    }
+    //如果未创建issue,在这里新建
+    else {
         _issue = new Issue(issueObj);
         var lineId = _issue.belongLineId;
         _issue.save(function (err, issue) {
+            var id = issue._id;
             if (err) {
                 console.log(err)
             }
             if (lineId) {
+                console.log('roleLength:'+roleLength);
+                for(var i=0;i<roleLength;i++){
+                    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
+                }
+                for(var i=0;i<(roleLength-1);i++){
+                    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
+                }
                 Line.findById(lineId, function(err, line) {
-                    console.log('lineType:'+typeof(line));
-                    console.log('line.issues:'+line.issues);
                     line.issues.push(issue._id);
                     line.save(function(err, line) {
                         res.redirect('/issue/' + issue._id)
                     })
                 })
             }
-            //res.redirect('/issue/' + issue._id);
         })
     }
 };
@@ -133,8 +149,8 @@ exports.del = function(req,res){
                 console.log('issue:'+issue);
                 console.log('line[0]:'+line[0]);
                 console.log('issue._id:'+issue._id);
-                line[0].issues.pull(issue._id);
-                Line.update({_id:issue.belongLineId},{$pull:{issues:issue._id}},{safe:true});
+                //从line中将issue删除
+                Line.update({_id:issue.belongLineId},{$pull:{issues:issue._id}}).exec();
             })
         })
         Issue.remove({_id: id},function(err,issue){
