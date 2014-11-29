@@ -19,7 +19,7 @@ var IssueSchema = new Schema({
     start: Date,
     end: Date,
     condition: Number,
-    role: [],  //需求所需角色为数组
+    role: [Number],  //需求所需角色为数组
     allocate: [
         {
             roleType: Number,
@@ -62,6 +62,11 @@ IssueSchema.statics = {
         return this
             .findOne({_id:id})
             .exec(cb)
+    },
+    //查看元素是否在数组中
+    findByArray: function(ele,array,cb){
+        return ele in array
+        .exec(cb)
     }
 }
 

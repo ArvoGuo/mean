@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var Issue = require('../models/issue');
 var Line = require('../models/line');
+var User = require('../models/user');
 var _ = require('underscore');
 //需求详情页
 exports.detail = function (req, res) {
@@ -145,10 +146,6 @@ exports.del = function(req,res){
     if(id){
         Issue.findById(id,function(err,issue){
             Line.find({issues:id},function(err,line){
-                console.log('line:'+line);
-                console.log('issue:'+issue);
-                console.log('line[0]:'+line[0]);
-                console.log('issue._id:'+issue._id);
                 //从line中将issue删除
                 Line.update({_id:issue.belongLineId},{$pull:{issues:issue._id}}).exec();
             })
@@ -168,11 +165,14 @@ exports.del = function(req,res){
 exports.my = function(req,res){
     //查找我所在的业务线，罗列出所有需求
     var userId = req.session.user._id;
+    var userRole = req.session.user.role;
     //如果登陆者在业务线内
     if (userId){
+        //首先找到我在的业务线组
         Line.find({members:userId},function(err,line){
             var lineId = line[0]._id;
-            Issue.find({belongLineId:lineId},function(err,issues){
+            //查找到我所在的业务线里的issue
+            Issue.find({belongLineId:lineId,role:{"$in":[userRole]}},function(err,issues){
                 console.log('line:'+line);
                 console.log('lineId:'+lineId);
                 console.log('issues:'+issues);
@@ -182,7 +182,5 @@ exports.my = function(req,res){
                 })
             })
         })
-    }
-    else {
     }
 }
