@@ -38,4 +38,5 @@ module.exports = function(app){
     app.post('/admin/issue/list',User.signinRequired,Issue.del);
     //我的主页
     app.get('/admin/line/list/my',User.signinRequired,Issue.my);
+    app.post('/admin/line/list/my',User.signinRequired,Issue.allocate);
 }

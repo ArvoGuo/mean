@@ -1,0 +1,30 @@
+table.table.table-hover.table-bordered
+    thead
+        tr
+            th 需求主题
+            th 需求状态
+            th 提醒
+            th 修改
+    tbody
+    each issue in issues
+        tr(class="issue-id-#{issue._id}")
+            td #{issue.name}
+            td
+                if issue.condition == "0"
+                    code 需求分析中
+                if issue.condition == "1"
+                    code PRD整理中
+                if issue.condition == "2"
+                    code 原型设计中
+                if issue.condition == "3"
+                    code 视觉稿设计中
+                if issue.condition == "4"
+                    code demo制作中
+                if issue.condition == "5"
+                    code 前后端联调中
+                if issue.condition == "6"
+                    code 测试中
+                if issue.condition == "7"
+                    code 发布
+            td
+            td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改

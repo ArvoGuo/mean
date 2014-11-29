@@ -4,7 +4,6 @@
 var mongoose = require('mongoose');
 var Issue = require('../models/issue');
 var Line = require('../models/line');
-var User = require('../models/user');
 var _ = require('underscore');
 //需求详情页
 exports.detail = function (req, res) {
@@ -85,12 +84,13 @@ exports.save = function (req, res,next) {
                 }
                 res.redirect('/issue/' + _issue.id);
                 //在issue集合里插入allocate字段
-                for(var i=0;i<roleLength;i++){
-                    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
-                }
-                for(var i=0;i<(roleLength-1);i++){
-                    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
-                }
+                //TODO: 修改业务线所需角色时，业务线allocate字段重复增加
+                //for(var i=0;i<roleLength;i++){
+                //    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
+                //}
+                //for(var i=0;i<(roleLength-1);i++){
+                //    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
+                //}
             });
         });
     }
@@ -169,18 +169,43 @@ exports.my = function(req,res){
     //如果登陆者在业务线内
     if (userId){
         //首先找到我在的业务线组
-        Line.find({members:userId},function(err,line){
-            var lineId = line[0]._id;
+        Line.find({members:userId},function(err,lines){
+            var lineLength = lines.length;
+            var lineIdArray = [];
+            //获取所有我所在的业务线的业务线id，组成数组
+            for(var i=0;i<lineLength;i++){
+                var lineId = lines[i]._id;
+                lineIdArray.push(lineId);
+            }
             //查找到我所在的业务线里的issue
-            Issue.find({belongLineId:lineId,role:{"$in":[userRole]}},function(err,issues){
-                console.log('line:'+line);
-                console.log('lineId:'+lineId);
+            //我未认领的需求
+            //TODO: 筛选需求，加一个条件：登录用户allocated:false
+            Issue.find({belongLineId:{$in:lineIdArray},role:{"$in":[userRole]}},function(err,issues){
+                console.log('lines:'+lines);
                 console.log('issues:'+issues);
+                console.log('issues.allocated:'+issues[0].allocate[0].allocated)
                 res.render('myIssueList',{
                     title: '我的需求列表',
                     issues: issues
                 })
             })
+        })
+    }
+}
+
+//我的主页需求列表-认领功能
+exports.allocate = function(req,res){
+    var id = req.query.id;
+    var role = req.session.user.role;
+    var memberId = req.session.user._id;
+    if(id){
+        Issue.findById(id,function(err,issue){
+            if(err){
+                console.log(err)
+            }else{
+                Issue.update({_id:id,'allocate.roleType':role},{$set:{'allocate.$.allocated':true,'allocate.$.memberId':memberId}}).exec();
+                res.json({success:1});
+            }
         })
     }
 }
