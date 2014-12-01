@@ -29,22 +29,22 @@ block content
                     textarea.form-control(type="text",cols="30",rows="4",name="issue[desc]",value=issue.desc) #{issue.desc}
             if issue._id
                 .form-group
-                    label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
-                    .col-sm-5
-                        input.form-control.f-text(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY-MM-DD')}")
+                    label.col-sm-2.control-label(for="dtp_input3") 开始日期
+                    .col-sm-5(data-link-field="dtp_input3")
+                        input.datetimepicker.form-control(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY-MM-DD')}")
                 .form-group
-                    label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
-                    .col-sm-5
-                        input.form-control.f-text(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY-MM-DD')}")
+                    label.col-sm-2.control-label(for="dtp_input4") 结束日期
+                    .col-sm-5(data-link-field="dtp_input4")
+                        input.datetimepicker.form-control(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY-MM-DD')}")
             else
                 .form-group
-                    label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期
-                    .col-sm-5
-                        input.form-control.f-text(type="text",name="issue[start]",value=issue.start)
-                .form-group
-                    label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期
-                    .col-sm-5
-                        input.form-control.f-text(type="text",name="issue[end]",value=issue.end)
+                    label.col-sm-2.control-label(for="dtp_input1") 开始日期
+                    div.col-sm-5(data-link-field="dtp_input1")
+                        input.datetimepicker.form-control(type="text",name="issue[start]",value=issue.start,readonly)
+                .form-group(for="dtp_input2")
+                    label.col-sm-2.control-label 结束日期
+                    .col-sm-5(data-link-field="dtp_input2")
+                        input.datetimepicker.form-control(type="text",name="issue[end]",value=issue.end,readonly)
             .form-group
                 label.col-sm-2.control-label 需求状态
                 .col-sm-5
@@ -123,3 +123,6 @@ block content
             .form-group
                 .col-sm-offset-2.col-sm-10
                     button.btn.btn-default(type="submit") 保存
+    link(href="/libs/bootstrap/dist/css/bootstrap-datetimepicker.min.css",rel="stylesheet")
+    script(src="/libs/bootstrap/dist/js/bootstrap-datetimepicker.min.js")
+    script(src="/js/issue-datetimepicker.js")

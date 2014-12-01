@@ -40,4 +40,7 @@ module.exports = function(app){
     app.get('/admin/line/list/my',User.signinRequired,Issue.my);
     app.get('/admin/line/list/myIssueUnallocated',User.signinRequired,Issue.myIssueUnallocated);
     app.post('/admin/line/list/my',User.signinRequired,Issue.allocate);
+    //业务线
+    //资源占用
+
 }
