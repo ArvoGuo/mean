@@ -1,24 +1,71 @@
 extends ../layout
 block content
-    .container.col-sm-offset-1.col-md-8
-        .row
-            form.form-horizontal(role="search",method="get",action="")
-                label.col-sm-2.col-sm-offset-2.control-label 输入业务线名称
-                .col-sm-8
-                    input.form-control(type="text",name="q")
-                    button.btn.btn-default(type="submit") 搜索
-            .tabbable.view
-                ul.nav.nav-tabs
-                    li.active
-                        a(href="#panel-1",data-toggle="tab") 我认领的
-                    li
-                        a(href="#panel-2",data-toggle="tab") 未认领的
-                .tab-content(style="margin-top:10px")
-                    .tab-pane.active(id="panel-1")
-                        include ./myIssueAllocated
-                    .tab-pane(id="panel-2")
-                        include ./myIssueUnallocated
-    script(src="/js/allocate.js")
+    //.container.col-sm-offset-1.col-md-10
+    //    .row
+    //        form.form-inline(role="form",method="get",action="/results")
+    //            label.col-sm-2.col-sm-offset-2.control-label 输入业务线名称
+    //            .col-sm-8
+    //                input.form-control(style="width:400px",type="text",name="q")
+    //                button.btn.btn-default(type="submit") 搜索
+    .row.container.col-sm-offset-1.col-md-10(style="margin-top:30px")
+        .tabbable.view
+            ul.nav.nav-tabs
+                li.active
+                    a(href="#panel-1",data-toggle="tab") 我认领的
+                li
+                    a(href="#panel-2",data-toggle="tab") 未认领的
+            .tab-content(style="margin-top:10px")
+                .tab-pane.active(id="panel-1")
+                    table.table.table-hover.table-bordered
+                        thead
+                            tr
+                                th 所属业务线
+                                th 需求主题
+                                th 需求状态
+                                th 提醒
+                                th 修改
+                        tbody
+                        each issue in issues
+                            tr(class="issue-id-#{issue._id}")
+                                td #{issue.belongLineId.name}
+                                td #{issue.name}
+                                td
+                                    if issue.condition == "0"
+                                        code 需求分析中
+                                    if issue.condition == "1"
+                                        code PRD整理中
+                                    if issue.condition == "2"
+                                        code 原型设计中
+                                    if issue.condition == "3"
+                                        code 视觉稿设计中
+                                    if issue.condition == "4"
+                                        code demo制作中
+                                    if issue.condition == "5"
+                                        code 前后端联调中
+                                    if issue.condition == "6"
+                                        code 测试中
+                                    if issue.condition == "7"
+                                        code 发布
+                                td
+                                    if issue.unAllocatedRole
+                                        each val in issue.unAllocatedRole
+                                            if val == "0"
+                                                span PD未认领,&nbsp;
+                                            if val == "1"
+                                                span 交互未认领,&nbsp;
+                                            if val == "2"
+                                                span 视觉未认领,&nbsp;
+                                            if val == "3"
+                                                span 前端未认领,&nbsp;
+                                            if val == "4"
+                                                span 开发未认领,&nbsp;
+                                            if val == "5"
+                                                span 测试未认领
+                                    else
+                                        span 所有角色均认领了需求
+                                td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
+                .tab-pane(id="panel-2")
+                    iframe(src="/admin/line/list/myIssueUnallocated",width="100%",frameborder="0")
 
 
 

@@ -40,6 +40,7 @@ exports.new = function (req, res) {
                 end: '',
                 condition: '',
                 role: '',
+                unAllocatedRole: '',
                 allocate: ''
             },
             lines: lines
@@ -65,10 +66,9 @@ exports.update = function (req, res) {
 };
 
 // admin post issue
-exports.save = function (req, res,next) {
+exports.save = function (req, res) {
     var id = req.body.issue._id;
     var issueObj = req.body.issue;
-    var role = issueObj.role;
     var roleLength = issueObj.role.length;
     var _issue;
     //如果已创建issue,在这里修改
@@ -79,8 +79,31 @@ exports.save = function (req, res,next) {
             }
             _issue = _.extend(issue, issueObj);
             _issue.save(function (err, issue) {
-                if (err) {
-                    console.log(err)
+                var role = issue.role;
+                var allocatedRole = issue.allocatedRole;
+                function arr_diff(a1, a2)
+                {
+                    var _unAllocatedRole = [];
+                    var ROLE = [];
+                    for(var i=0;i<a1.length;i++){
+                        ROLE[a1[i]]=true;
+                    }
+                    for(var i=0;i<a2.length;i++){
+                        if(ROLE[a2[i]]) delete ROLE[a2[i]];
+                        else ROLE[a2[i]]=true;
+                    }
+                    for(var r in ROLE){
+                        _unAllocatedRole.push(r);
+                    }
+                    return _unAllocatedRole;
+                }
+                //未认领的角色为该issue所有角色减去已认领的角色
+                var _unAllocatedRole = arr_diff(role,allocatedRole)
+                console.log('_unAllocatedRole:'+_unAllocatedRole);
+                if(_unAllocatedRole != ''){
+                    Issue.update({_id:id},{$set:{unAllocatedRole:_unAllocatedRole}}).exec();
+                }else{
+                    Issue.update({_id:id},{$set:{unAllocatedRole:null}}).exec();
                 }
                 res.redirect('/issue/' + _issue.id);
                 //在issue集合里插入allocate字段
@@ -98,6 +121,7 @@ exports.save = function (req, res,next) {
     else {
         _issue = new Issue(issueObj);
         var lineId = _issue.belongLineId;
+        var role = _issue.role;
         _issue.save(function (err, issue) {
             var id = issue._id;
             if (err) {
@@ -111,10 +135,15 @@ exports.save = function (req, res,next) {
                 for(var i=0;i<(roleLength-1);i++){
                     Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
                 }
+                Issue.update({_id:id},{$pushAll:{unAllocatedRole:role}}).exec();
                 Line.findById(lineId, function(err, line) {
                     line.issues.push(issue._id);
                     line.save(function(err, line) {
-                        res.redirect('/issue/' + issue._id)
+                        if(err){
+                            console.log(err)
+                        }else{
+                            res.redirect('/issue/' + issue._id)
+                        }
                     })
                 })
             }
@@ -161,7 +190,7 @@ exports.del = function(req,res){
     }
 };
 
-//我的主页-需求列表
+//我认领的需求
 exports.my = function(req,res){
     //查找我所在的业务线，罗列出所有需求
     var userId = req.session.user._id;
@@ -178,20 +207,59 @@ exports.my = function(req,res){
                 lineIdArray.push(lineId);
             }
             //查找到我所在的业务线里的issue
-            //我未认领的需求
-            //TODO: 筛选需求，加一个条件：登录用户allocated:false
-            Issue.find({belongLineId:{$in:lineIdArray},role:{"$in":[userRole]}},function(err,issues){
-                console.log('lines:'+lines);
-                console.log('issues:'+issues);
-                console.log('issues.allocated:'+issues[0].allocate[0].allocated)
-                res.render('myIssueList',{
-                    title: '我的需求列表',
-                    issues: issues
+            //我认领的需求
+            Issue
+                .find({belongLineId:{$in:lineIdArray},role:{"$in":[userRole]},members:{$in:[userId]}})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    console.log('lines:'+lines);
+                    console.log('issues:'+issues);
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.render('myIssueList',{
+                            title: '我的需求列表',
+                            issues: issues
+                        })
+                    }
                 })
-            })
         })
     }
 }
+
+//我未认领的需求
+exports.myIssueUnallocated = function(req,res){
+    //查找我所在的业务线，罗列出所有需求
+    var userId = req.session.user._id;
+    var userRole = req.session.user.role;
+    //如果登陆者在业务线内
+    if (userId){
+        //首先找到我在的业务线组
+        Line.find({members:userId},function(err,lines){
+            var lineLength = lines.length;
+            var lineIdArray = [];
+            //获取所有我所在的业务线的业务线id，组成数组
+            for(var i=0;i<lineLength;i++){
+                var lineId = lines[i]._id;
+                lineIdArray.push(lineId);
+            }
+            //查找到我所在的业务线里的issue
+            //我未认领的需求
+            Issue
+                .find({belongLineId:{$in:lineIdArray},role:{"$in":[userRole]},members:{$nin:[userId]}})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    console.log('lines:'+lines);
+                    console.log('issues:'+issues);
+                    res.render('myIssueUnallocated',{
+                        title: '我的需求列表',
+                        issues: issues
+                    })
+                })
+        })
+    }
+}
+
 
 //我的主页需求列表-认领功能
 exports.allocate = function(req,res){
@@ -203,6 +271,10 @@ exports.allocate = function(req,res){
             if(err){
                 console.log(err)
             }else{
+                console.log('issue:'+issue);
+                Issue.update({_id:id},{$push:{members:memberId}}).exec();
+                Issue.update({_id:id},{$push:{allocatedRole:role}}).exec();
+                Issue.update({_id:id},{$pull:{unAllocatedRole:role}}).exec();
                 Issue.update({_id:id,'allocate.roleType':role},{$set:{'allocate.$.allocated':true,'allocate.$.memberId':memberId}}).exec();
                 res.json({success:1});
             }
