@@ -41,7 +41,12 @@ module.exports = function(app){
     app.get('/admin/line/list/myIssueUnallocated',User.signinRequired,Issue.myIssueUnallocated);
     app.post('/admin/line/list/my',User.signinRequired,Issue.allocate);
     //业务线
-    //资源占用
+    //我的主页-已认领的需求
     app.get('/admin/line/list/myAllocatedJson',User.signinRequired,Issue.myAllocatedJson);
+    //我的主页-未认领的需求
     app.get('/admin/line/list/myUnallocatedJson',User.signinRequired,Issue.myUnallocatedJson);
+    //我所在的业务线
+    app.get('/admin/line/my',User.signinRequired,Line.my);
+    //退出业务线
+    app.post('/admin/line/my',User.signinRequired,Line.exit);
 }

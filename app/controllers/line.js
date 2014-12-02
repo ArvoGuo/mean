@@ -9,15 +9,15 @@ var _ = require('underscore');
 exports.detail = function (req, res) {
     var id = req.params.id;
     Line
-        .findOne({_id:id})
-        .populate('issues','title')
-        .populate('members','name')
-        .populate('creator','name')
-        .exec(function(err,line){
+        .findOne({_id: id})
+        .populate('issues', 'title')
+        .populate('members', 'name')
+        .populate('creator', 'name')
+        .exec(function (err, line) {
             console.log('line:');
             console.log(line);
-            if(err) console.log(err)
-            res.render('lineDetail',{
+            if (err) console.log(err)
+            res.render('lineDetail', {
                 title: line.name,
                 line: line
             })
@@ -26,13 +26,13 @@ exports.detail = function (req, res) {
 
 //业务线后台录入
 exports.new = function (req, res) {
-    User.find({},function(err,users){
+    User.find({}, function (err, users) {
         res.render('line', {
             title: '新建业务线',
             line: {
                 name: '',
                 desc: '',
-                creator:  req.session.user._id,
+                creator: req.session.user._id,
                 issues: '',
                 members: ''
             },
@@ -110,16 +110,54 @@ exports.list = function (req, res) {
 
 //删除该业务线
 //所有put/delete方法都可以使用post方法
-exports.del = function(req,res){
+exports.del = function (req, res) {
     var id = req.query.id;
-    if(id){
-        Line.remove({_id: id},function(err,line){
-            if(err){
+    if (id) {
+        Line.remove({_id: id}, function (err, line) {
+            if (err) {
                 console.log(err)
             }
-            else{
-                res.json({success:1})
+            else {
+                res.json({success: 1})
             }
         })
     }
 };
+
+//我所在的业务线
+exports.my = function (req, res) {
+    //查找我所在的业务线，罗列出所有需求
+    var userId = req.session.user._id;
+    //如果登陆者在业务线内
+    if (userId) {
+        //首先找到我在的业务线组
+        Line
+            .find({members: userId})
+            .populate('members', 'name')
+            .populate('creator', 'name')
+            .exec(function (err, lines) {
+                res.render('myLine', {
+                    title: '我的主页-业务线',
+                    lines: lines
+                })
+            })
+    }
+}
+
+//退出业务线
+exports.exit = function (req, res) {
+    var id = req.query.id;
+    var userId = req.session.user._id;
+    if (id) {
+        Line
+            .update({_id: id}, {$pull: {members: userId}})
+            .exec(function (err, lines) {
+                if (err) {
+                    console.log(err)
+                }
+                else {
+                    res.json({success: 1})
+                }
+            });
+    }
+}
