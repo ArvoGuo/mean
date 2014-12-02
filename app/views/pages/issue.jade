@@ -22,7 +22,7 @@ block content
             .form-group
                 label.col-sm-2.control-label 需求主题
                 .col-sm-10
-                    input.form-control(type="text",name="issue[name]",value=issue.name)
+                    input.form-control(type="text",name="issue[title]",value=issue.title)
             .form-group
                 label.col-sm-2.control-label 需求描述
                 .col-sm-10
@@ -31,11 +31,11 @@ block content
                 .form-group
                     label.col-sm-2.control-label(for="dtp_input3") 开始日期
                     .col-sm-5(data-link-field="dtp_input3")
-                        input.datetimepicker.form-control(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY-MM-DD')}")
+                        input.datetimepicker.form-control(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY-MM-DD')}",readonly)
                 .form-group
                     label.col-sm-2.control-label(for="dtp_input4") 结束日期
                     .col-sm-5(data-link-field="dtp_input4")
-                        input.datetimepicker.form-control(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY-MM-DD')}")
+                        input.datetimepicker.form-control(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY-MM-DD')}",readonly)
             else
                 .form-group
                     label.col-sm-2.control-label(for="dtp_input1") 开始日期

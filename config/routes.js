@@ -42,5 +42,6 @@ module.exports = function(app){
     app.post('/admin/line/list/my',User.signinRequired,Issue.allocate);
     //业务线
     //资源占用
-
+    app.get('/admin/line/list/myAllocatedJson',User.signinRequired,Issue.myAllocatedJson);
+    app.get('/admin/line/list/myUnallocatedJson',User.signinRequired,Issue.myUnallocatedJson);
 }

@@ -10,7 +10,7 @@ exports.detail = function (req, res) {
     var id = req.params.id;
     Line
         .findOne({_id:id})
-        .populate('issues','name')
+        .populate('issues','title')
         .populate('members','name')
         .populate('creator','name')
         .exec(function(err,line){

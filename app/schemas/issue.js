@@ -14,7 +14,7 @@ var IssueSchema = new Schema({
         type: ObjectId,
         ref: 'Line'
     },
-    name: String,
+    title: String,
     desc: String,
     start: Date,
     end: Date,
@@ -68,11 +68,6 @@ IssueSchema.statics = {
         return this
             .findOne({_id:id})
             .exec(cb)
-    },
-    //查看元素是否在数组中
-    findByArray: function(ele,array,cb){
-        return ele in array
-        .exec(cb)
     }
 }
 

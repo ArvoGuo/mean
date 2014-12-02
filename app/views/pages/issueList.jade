@@ -19,7 +19,7 @@ block content
                 each issue in issues
                     tr(class="issue-id-#{issue._id}")
                         td #{issue.belongLineId.name}
-                        td #{issue.name}
+                        td #{issue.title}
                         td #{issue.desc}
                         td #{moment(issue.start).format('YYYY-MM-DD')}
                         td #{moment(issue.end).format('YYYY-MM-DD')}

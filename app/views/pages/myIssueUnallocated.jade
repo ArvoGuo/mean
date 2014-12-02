@@ -1,7 +1,15 @@
 link(href="/libs/bootstrap/dist/css/bootstrap.min.css",rel="stylesheet")
 script(src="/libs/jquery/dist/jquery.min.js")
 script(src="/js/allocate.js")
-table.table.table-hover.table-bordered
+link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
+script(src="/libs/fullcalendar/moment.min.js")
+script(src="/libs/fullcalendar/fullcalendar.min.js")
+script(src="/js/fullcalendar.js")
+button.btn.btn-primary.show-list
+    span.glyphicon.glyphicon-list-alt 列表显示
+button.btn.btn-default.show-calendar
+    span.glyphicon.glyphicon-calendar 日历显示
+table.table.table-hover.table-bordered.allocatedList(style="display:block;margin-top:10px")
     thead
         tr
             th 所属业务线
@@ -12,7 +20,7 @@ table.table.table-hover.table-bordered
         each issue in issues
             tr(class="issue-id-#{issue._id}")
                 td #{issue.belongLineId.name}
-                td #{issue.name}
+                td #{issue.title}
                 td
                     if issue.condition == "0"
                         code 需求分析中
@@ -31,3 +39,4 @@ table.table.table-hover.table-bordered
                     if issue.condition == "7"
                         code 发布
                 td: button.btn.btn-danger.btn-xs.allocate(type="button",data-id="#{issue._id}") 认领
+#calendar-unAllocated.calendar(style="visibility:hidden;margin-top:10px")

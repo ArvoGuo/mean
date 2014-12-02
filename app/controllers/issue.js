@@ -17,7 +17,7 @@ exports.detail = function (req, res) {
             .populate('creator','name')
             .exec(function(err,issue){
                 res.render('issueDetail', {
-                    title: issue.name,
+                    title: issue.title,
                     lines: lines,
                     issue: issue
                 })
@@ -34,7 +34,7 @@ exports.new = function (req, res) {
             issue: {
                 creator: req.session.user._id,
                 belongLineId: '',
-                name: '',
+                title: '',
                 desc: '',
                 start: '',
                 end: '',
@@ -227,6 +227,41 @@ exports.my = function(req,res){
     }
 }
 
+//获取我认领的需求json数组
+exports.myAllocatedJson = function(req,res){
+    //查找我所在的业务线，罗列出所有需求
+    var userId = req.session.user._id;
+    var userRole = req.session.user.role;
+    //如果登陆者在业务线内
+    if (userId){
+        //首先找到我在的业务线组
+        Line.find({members:userId},function(err,lines){
+            var lineLength = lines.length;
+            var lineIdArray = [];
+            //获取所有我所在的业务线的业务线id，组成数组
+            for(var i=0;i<lineLength;i++){
+                var lineId = lines[i]._id;
+                lineIdArray.push(lineId);
+            }
+            //查找到我所在的业务线里的issue
+            //我认领的需求
+            Issue
+                //只取title,start,end字段
+                .find({belongLineId:{$in:lineIdArray},role:{"$in":[userRole]},members:{$in:[userId]}},{_id:0,title:1,start:1,end:1})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    console.log('lines:'+lines);
+                    console.log('issues:'+issues);
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.json(issues)
+                    }
+                })
+        })
+    }
+}
+
 //我未认领的需求
 exports.myIssueUnallocated = function(req,res){
     //查找我所在的业务线，罗列出所有需求
@@ -260,6 +295,40 @@ exports.myIssueUnallocated = function(req,res){
     }
 }
 
+//获取我未认领的需求json数组
+exports.myUnallocatedJson = function(req,res){
+    //查找我所在的业务线，罗列出所有需求
+    var userId = req.session.user._id;
+    var userRole = req.session.user.role;
+    //如果登陆者在业务线内
+    if (userId){
+        //首先找到我在的业务线组
+        Line.find({members:userId},function(err,lines){
+            var lineLength = lines.length;
+            var lineIdArray = [];
+            //获取所有我所在的业务线的业务线id，组成数组
+            for(var i=0;i<lineLength;i++){
+                var lineId = lines[i]._id;
+                lineIdArray.push(lineId);
+            }
+            //查找到我所在的业务线里的issue
+            //我未认领的需求
+            Issue
+                //只取title,start,end字段
+                .find({belongLineId:{$in:lineIdArray},role:{"$in":[userRole]},members:{$nin:[userId]}},{_id:0,title:1,start:1,end:1})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    console.log('lines:'+lines);
+                    console.log('issues:'+issues);
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.json(issues)
+                    }
+                })
+        })
+    }
+}
 
 //我的主页需求列表-认领功能
 exports.allocate = function(req,res){
@@ -281,3 +350,4 @@ exports.allocate = function(req,res){
         })
     }
 }
+

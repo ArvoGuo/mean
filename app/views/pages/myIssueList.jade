@@ -16,7 +16,11 @@ block content
                     a(href="#panel-2",data-toggle="tab") 未认领的
             .tab-content(style="margin-top:10px")
                 .tab-pane.active(id="panel-1")
-                    table.table.table-hover.table-bordered
+                    button.btn.btn-primary.show-list
+                        span.glyphicon.glyphicon-list-alt 列表显示
+                    button.btn.btn-default.show-calendar
+                        span.glyphicon.glyphicon-calendar 日历显示
+                    table.allocatedList.table.table-hover.table-bordered(style="display:block;margin-top:10px")
                         thead
                             tr
                                 th 所属业务线
@@ -28,7 +32,7 @@ block content
                         each issue in issues
                             tr(class="issue-id-#{issue._id}")
                                 td #{issue.belongLineId.name}
-                                td #{issue.name}
+                                td #{issue.title}
                                 td
                                     if issue.condition == "0"
                                         code 需求分析中
@@ -64,8 +68,14 @@ block content
                                     else
                                         span 所有角色均认领了需求
                                 td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
+                    #calendar-allocated.calendar(style="visibility:hidden;margin-top:10px")
                 .tab-pane(id="panel-2")
-                    iframe(src="/admin/line/list/myIssueUnallocated",width="100%",frameborder="0")
+                    iframe(src="/admin/line/list/myIssueUnallocated",frameborder="0",style="width:100%;min-height:1000px")
+    link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
+    script(src="/libs/fullcalendar/moment.min.js")
+    script(src="/libs/fullcalendar/fullcalendar.min.js")
+    script(src="/js/fullcalendar.js")
+
 
 
 

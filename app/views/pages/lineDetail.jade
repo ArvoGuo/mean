@@ -22,7 +22,7 @@ block content
                         if line.issues
                             each issue in line.issues
                                 p
-                                    a(href="/issue/#{issue._id}") #{issue.name}
+                                    a(href="/issue/#{issue._id}") #{issue.title}
                         else
                             p 该业务线上还未创建任何需求
                     dt 业务成员:
