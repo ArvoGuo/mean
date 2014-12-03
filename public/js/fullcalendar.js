@@ -5,10 +5,11 @@ $(document).ready(function() {
     //fullcalendar日历组件调用
     //已认领的需求显示
     $('#calendar-allocated').fullCalendar({
+        lang: 'zh-cn',
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            right: 'month,basicWeek,basicDay'
         },
         defaultView: 'basicWeek',
         editable: true,
@@ -20,10 +21,11 @@ $(document).ready(function() {
 
     //未认领的需求显示
     $('#calendar-unAllocated').fullCalendar({
+        lang: 'zh-cn',
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            right: 'month,basicWeek,basicDay'
         },
         defaultView: 'basicWeek',
         editable: true,

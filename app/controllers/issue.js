@@ -351,3 +351,146 @@ exports.allocate = function(req,res){
     }
 }
 
+//业务线-需求列表
+exports.all = function(req,res){
+    var q = req.query.q;
+    //查找到业务线名字和关键词相同的所有业务
+    if(q){
+        //正则匹配关键字
+        Line.find({name:new RegExp(q+'.*','i')},function(err,lines){
+            var lineLength = lines.length;
+            var lineIdArray = [];
+            //获取所有我所在的业务线的业务线id，组成数组
+            for(var i=0;i<lineLength;i++){
+                var lineId = lines[i]._id;
+                lineIdArray.push(lineId);
+            }
+            //列表展示这些业务线的所有需求
+            Issue
+                .find({belongLineId:{$in:lineIdArray}})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    console.log('lines:'+lines);
+                    console.log('issues:'+issues);
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.render('lineIssueList',{
+                            title: '业务线-需求列表',
+                            issues: issues
+                        })
+                    }
+                })
+        })
+    }else{
+        Line.find({},function(err,lines){
+            Issue
+                .find({})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.render('lineIssueList',{
+                            title: '业务线-需求列表',
+                            issues: issues
+                        })
+                    }
+                })
+        })
+    }
+}
+
+//业务线-需求列表,日历Json数组
+exports.allIssueJson = function(req,res){
+    var q = req.query.q;
+    //查找到业务线名字和关键词相同的所有业务
+    if(q){
+        //正则匹配关键字
+        Line.find({name:new RegExp(q+'.*','i')},function(err,lines){
+            var lineLength = lines.length;
+            var lineIdArray = [];
+            //获取所有我所在的业务线的业务线id，组成数组
+            for(var i=0;i<lineLength;i++){
+                var lineId = lines[i]._id;
+                lineIdArray.push(lineId);
+            }
+            //列表展示这些业务线的所有需求
+            Issue
+                .find({belongLineId:{$in:lineIdArray}},{_id:0,title:1,start:1,end:1})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    console.log('lines:'+lines);
+                    console.log('issues:'+issues);
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.json(issues)
+                    }
+                })
+        })
+    }else{
+        Line.find({},function(err,lines){
+            Issue
+                .find({},{_id:0,title:1,start:1,end:1})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.json(issues)
+                    }
+                })
+        })
+    }
+}
+
+//业务线-资源占用
+exports.selectRole = function(req,res){
+    var q = req.query.q;
+    //查找到业务线名字和关键词相同的所有业务
+    if(q){
+        //正则匹配关键字
+        Line.find({name:new RegExp(q+'.*','i')},function(err,lines){
+            var lineLength = lines.length;
+            var lineIdArray = [];
+            //获取所有我所在的业务线的业务线id，组成数组
+            for(var i=0;i<lineLength;i++){
+                var lineId = lines[i]._id;
+                lineIdArray.push(lineId);
+            }
+            //列表展示这些业务线的所有需求
+            Issue
+                .find({belongLineId:{$in:lineIdArray}})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    console.log('lines:'+lines);
+                    console.log('issues:'+issues);
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.render('lineRole',{
+                            title: '业务线-需求列表',
+                            issues: issues
+                        })
+                    }
+                })
+        })
+    }else{
+        Line.find({},function(err,lines){
+            Issue
+                .find({})
+                .populate('belongLineId','name')
+                .exec(function(err,issues){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.render('lineRole',{
+                            title: '业务线-需求列表',
+                            issues: issues
+                        })
+                    }
+                })
+        })
+    }
+}

@@ -9,6 +9,7 @@ var logger = require('morgan'); //在vim里打印开发环境日志
 var port = process.env.PORT || 8000;
 var app = express();
 var dbUrl = 'mongodb://localhost/mean';
+//var dbUrl = 'mongodb://cassiexu:09230827@ds053080.mongolab.com:53080/rms';
 mongoose.connect(dbUrl);
 app.set('views', './app/views/pages');
 app.set('view engine', 'jade');
@@ -19,7 +20,8 @@ app.use(session({
     secret: 'imooc',
     store: new mongoStore({
         url: dbUrl,
-        collection: 'sessions'
+        collection: 'sessions',
+        auto_reconnect:true
     })
 }));
 
