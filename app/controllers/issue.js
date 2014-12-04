@@ -354,6 +354,7 @@ exports.allocate = function(req,res){
 //业务线-需求列表
 exports.all = function(req,res){
     var q = req.query.q;
+    console.log('q:'+q);
     //查找到业务线名字和关键词相同的所有业务
     if(q){
         //正则匹配关键字
@@ -370,8 +371,6 @@ exports.all = function(req,res){
                 .find({belongLineId:{$in:lineIdArray}})
                 .populate('belongLineId','name')
                 .exec(function(err,issues){
-                    console.log('lines:'+lines);
-                    console.log('issues:'+issues);
                     if(err){
                         console.log(err)
                     }else{
@@ -403,7 +402,9 @@ exports.all = function(req,res){
 
 //业务线-需求列表,日历Json数组
 exports.allIssueJson = function(req,res){
-    var q = req.query.q;
+    var q = req.param('q');
+    console.log('q:'+q);
+    console.log('req.params:'+req.params);
     //查找到业务线名字和关键词相同的所有业务
     if(q){
         //正则匹配关键字
@@ -415,6 +416,7 @@ exports.allIssueJson = function(req,res){
                 var lineId = lines[i]._id;
                 lineIdArray.push(lineId);
             }
+            console.log('lineIdArray:'+lineIdArray);
             //列表展示这些业务线的所有需求
             Issue
                 .find({belongLineId:{$in:lineIdArray}},{_id:0,title:1,start:1,end:1})

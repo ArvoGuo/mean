@@ -46,7 +46,9 @@ exports.update = function (req, res) {
     var id = req.params.id;
     if (id) {
         Line.findById(id, function (err, line) {
+            console.log('updateline:'+line);
             User.find({}, function (err, users) {
+                    console.log('updateusers:'+users);
                     res.render('line', {
                         title: '更新业务线',
                         line: line,
@@ -63,9 +65,10 @@ exports.save = function (req, res) {
     var id = req.body.line._id;
     var lineObj = req.body.line;
     var _line;
-
+    //修改业务线
     if (id !== 'undefined') {
         Line.findById(id, function (err, line) {
+            console.log('line:'+line);
             if (err) {
                 console.log(err)
             }
@@ -78,6 +81,7 @@ exports.save = function (req, res) {
             })
         })
     } else {
+        //新建业务线
         _line = new Line({
             desc: lineObj.desc,
             name: lineObj.name,

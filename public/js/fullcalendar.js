@@ -12,6 +12,7 @@ $(document).ready(function() {
             right: 'month,basicWeek,basicDay'
         },
         defaultView: 'basicWeek',
+        contentHeight: 400,
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         events: {
@@ -28,6 +29,7 @@ $(document).ready(function() {
             right: 'month,basicWeek,basicDay'
         },
         defaultView: 'basicWeek',
+        contentHeight: 400,
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         events: {
