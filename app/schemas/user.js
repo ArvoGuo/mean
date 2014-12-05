@@ -1,15 +1,21 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 //密码加密工具
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTORY = 10;
 
-var UserSchema = new mongoose.Schema({
+var UserSchema = new Schema({
     name: {
         unique: true,
         type: String
     },
     password: String,
     role: Number,
+    issues: [{
+        type: ObjectId,
+        ref: 'Issue'
+    }],
     meta:{
         createAt:{
             type:Date,

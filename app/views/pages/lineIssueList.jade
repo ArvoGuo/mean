@@ -24,6 +24,7 @@ block content
                                 th 需求主题
                                 th 需求状态
                                 th 提醒
+                                th 查看详情
                                 th 修改
                         tbody
                         each issue in issues
@@ -48,7 +49,7 @@ block content
                                     if issue.condition == "7"
                                         code 发布
                                 td
-                                    if issue.unAllocatedRole
+                                    if(issue.unAllocatedRole.length !== 0)
                                         each val in issue.unAllocatedRole
                                             if val == "0"
                                                 span PD未认领,&nbsp;
@@ -64,6 +65,7 @@ block content
                                                 span 测试未认领
                                     else
                                         span 所有角色均认领了需求
+                                td: a.btn.btn-info.btn-xs(target="_blank",href="/issue/#{issue._id}") 查看
                                 td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
                 .tab-pane(id="panel-2").active
                     #calendar(style="margin-top:10px;visibility:hidden;")

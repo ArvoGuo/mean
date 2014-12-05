@@ -17,6 +17,12 @@ $(document).ready(function() {
         eventLimit: true, // allow "more" link when too many events
         events: {
             url: '/admin/line/list/myAllocatedJson'
+        },
+        eventClick: function(event) {
+            if (event.url) {
+                window.open(event.url);
+                return false;
+            }
         }
     });
 
@@ -34,6 +40,12 @@ $(document).ready(function() {
         eventLimit: true, // allow "more" link when too many events
         events: {
             url: '/admin/line/list/myUnallocatedJson'
+        },
+        eventClick: function(event) {
+            if (event.url) {
+                window.open(event.url);
+                return false;
+            }
         }
     });
 
@@ -42,13 +54,14 @@ $(document).ready(function() {
         $(this).removeClass('btn-default').addClass('btn-primary');
         $('.show-list').removeClass('btn-primary').addClass('btn-default');
         $('.allocatedList').css('display','none');
-        $('.calendar').css('visibility','visible');
+        $('.calendar').css('display','block');
+        $('.calendar').fullCalendar('render');
     })
     $('.show-list').click(function(){
         $(this).removeClass('btn-default').addClass('btn-primary');
         $('.show-calendar').removeClass('btn-primary').addClass('btn-default');
         $('.allocatedList').css('display','block');
-        $('.calendar').css('visibility','hidden');
+        $('.calendar').css('display','none');
     })
 });
 

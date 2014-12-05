@@ -9,8 +9,7 @@ var logger = require('morgan'); //在vim里打印开发环境日志
 var port = process.env.PORT || 8000;
 var app = express();
 var dbUrl = 'mongodb://localhost/mean';
-//var dbUrl = 'mongodb://cassiexu:09230827@ds053080.mongolab.com:53080/rms';
-//var dbUrl = 'mongodb://8D0TSO0eFEi0QEFQVOc8qUPE:4uAmxf3LiCEaUva3ZZ45WA4fbZMO7lSi@mongo.duapp.com:8908/WWpGwnHssVUztzGDnOdD';
+//var dbUrl = 'mongodb://cassie:09230827@ds053080.mongolab.com:53080/rms';
 mongoose.connect(dbUrl);
 app.set('views', './app/views/pages');
 app.set('view engine', 'jade');

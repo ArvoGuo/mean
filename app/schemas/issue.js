@@ -18,6 +18,7 @@ var IssueSchema = new Schema({
     desc: String,
     start: Date,
     end: Date,
+    url: String,
     condition: Number,
     role: [Number],  //需求所需角色为数组
     unAllocatedRole: [Number],  //未认领需求的角色
