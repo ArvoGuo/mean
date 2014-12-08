@@ -51,7 +51,6 @@ module.exports = function(app){
     app.post('/admin/line/my',User.signinRequired,Line.exit);
     //业务线-资源占用
     app.get('/admin/line/role',User.signinRequired,Issue.selectRole);
-    app.post('/admin/line/role',User.signinRequired,Issue.postRole);
     //业务线-资源占用Json数组
     app.get('/admin/line/role/selectJson',User.signinRequired,Issue.selectJson);
     //业务线-需求列表

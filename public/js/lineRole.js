@@ -45,7 +45,8 @@ $(document).ready(function() {
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             events: {
-                url: '/admin/line/role/selectJson'
+                url: '/admin/line/role/selectJson',
+                color: 'yellow'
             },
             eventClick: function(event) {
                 if (event.url) {
@@ -54,28 +55,32 @@ $(document).ready(function() {
                 }
             }
         });
+        $('#calendar').fullCalendar( 'addEventSource', {
+            events: [
+                {
+                    id: 1,
+                    title: 'All Day Event',
+                    start: '2014-12-05'
+                },
+                {
+                    title: 'Click for Google',
+                    url: 'http://google.com/',
+                    start: '2014-12-09'
+                }
+            ]
+        } )
     }
 
-    //post选中的data-role
-    $('.select').click(function (e) {
-        var target = $(e.target);
-        var dataRole = target.data('role');
-        var currentUrl = window.location.href
-        var postUrl;
-        if (currentUrl === 'http://localhost:3000/admin/line/role'){
-            postUrl = currentUrl;
-        }else{
-            postUrl = currentUrl+"&";
-        }
-        $.ajax({
-            type: 'POST',
-            url: '/admin/line/role',
-            data:"id="+dataRole
-        })
-            .done(function (results) {
-                if (results.success === 1) {
 
-                }
-            })
-    })
+    //获取url里参数填充到input[type="hidden"]
+    var paramRoleId = getQueryString('roleId');
+    var paramMemberId = getQueryString('memberId');
+    var inputQ = '<input type="hidden" name="q" value="'+paramQ+'">';
+    var inputRoleId = '<input type="hidden" name="roleId" value="'+paramRoleId+'">';
+    if(paramQ){
+        $('.inputQ').val(paramQ);
+    }
+    //if(paramRoleId){
+    //    $('.paramInput').append(inputRoleId);
+    //}
 })

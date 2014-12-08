@@ -5,23 +5,32 @@ block content
         .row
             form.form-inline(role="form",method="GET",action="/admin/line/role")
                 label.col-sm-2.col-sm-offset-2.control-label 输入业务线名称关键词
-                .col-sm-8
-                    input.form-control(style="width:400px",type="text",name="q")
+                .col-sm-8.paramInput
+                    input.inputQ.form-control(style="width:400px",type="text",name="q",value="")
                     button.btn.btn-default(type="submit") 搜索
-            p
-                .btn-group
-                    button.select.btn.btn-default(type="button",data-role="0") PD
-                    button.select.btn.btn-default(type="button",data-role="1") 交互
-                    button.select.btn.btn-default(type="button",data-role="2") 视觉
-                    button.select.btn.btn-primary(type="button",data-role="3") 前端
-                    button.select.btn.btn-default(type="button",data-role="4") 开发
-                    button.select.btn.btn-default(type="button",data-role="5") 测试
-            p
-                .btn-group
-                    if issues.length
-                    each issue in issues
-                        - for(var index=0;index<issue.members.length;index++)
-                            button.btn.btn-default(type="button",data-id=issue[members]) #{issue.members[index].name}
+                label.col-sm-2.col-sm-offset-2.control-label 选择角色
+                .col-sm-8
+                    .btn-group
+                        button.select.btn.btn-default(type="text",value="0",name="roleId") PD
+                        button.select.btn.btn-default(type="text",value="1",name="roleId") 交互
+                        button.select.btn.btn-default(type="text",value="2",name="roleId") 视觉
+                        button.select.btn.btn-primary(type="text",value="3",name="roleId") 前端
+                        button.select.btn.btn-default(type="text",value="4",name="roleId") 开发
+                        button.select.btn.btn-default(type="text",value="5",name="roleId") 测试
+                label.col-sm-2.col-sm-offset-2.control-label 选择个人
+                .col-sm-8
+                    .btn-group
+                        //if issues.length
+                        //    each issue in issues
+                        //        - for(var index=0;index<issue.members.length;index++)
+                        //            button.btn.btn-default(type="text",value="#{issue.members[index]._id}",name="memberId") #{issue.members[index].name}
+                        //else
+                        //    span 该角色没有成员在此业务线中
+                        if users.length
+                            each user in users
+                                button.btn.btn-default(type="text",value="#{user._id}",name="memberId") #{user.name}
+                        else
+                            span 该角色没有成员在此业务线中
     .row.container.col-sm-offset-1.col-md-10(style="margin-top:30px")
         #calendar(style="margin-top:10px")
     link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
