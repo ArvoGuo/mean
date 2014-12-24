@@ -9,8 +9,25 @@ $(document).ready(function() {
         if (r != null) return decodeURI(r[2]); return null;
     }
     var paramQ = getQueryString('q');
-    //fullcalendar日历组件调用
-    if(paramQ !== null) {
+    //var paramRoleId = getQueryString('roleId');
+    var paramMemberId = getQueryString('memberId');
+    console.log('paramQ:'+paramQ);
+    var paramRoleId;
+    console.log('paramRoleId:'+paramRoleId);
+    console.log('paramMemberId:'+paramMemberId);
+
+    //选择角色，给选中角色加上selected，button-primary样式
+    $('.filterRole').click(function(e){
+        var target = $(e.target);
+        $('.filterRole').removeClass('selected btn-primary').addClass('btn-default');
+        target.addClass('selected btn-primary').removeClass('btn-default');
+        paramRoleId = $('.selected')[0].value;
+        console.log('paramRoleId:'+paramRoleId);
+        renderCalendar(paramRoleId);
+    })
+
+    function renderCalendar(paramRoleId){
+        //fullcalendar日历组件调用
         $('#calendar').fullCalendar({
             lang: 'zh-cn',
             header: {
@@ -23,7 +40,7 @@ $(document).ready(function() {
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             events: {
-                url: '/admin/line/role/selectJson?q=' + paramQ
+                url: '/admin/line/role/selectJson' + ((paramQ !== null) ? '?q=' + paramQ : '?q=') + ((paramRoleId !== null) ? '&roleId=' + paramRoleId : '&roleId=')
             },
             eventClick: function(event) {
                 if (event.url) {
@@ -32,55 +49,28 @@ $(document).ready(function() {
                 }
             }
         });
-    }else{
-        $('#calendar').fullCalendar({
-            lang: 'zh-cn',
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,basicWeek,basicDay'
-            },
-            defaultView: 'basicWeek',
-            contentHeight: 300,
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: {
-                url: '/admin/line/role/selectJson',
-                color: 'yellow'
-            },
-            eventClick: function(event) {
-                if (event.url) {
-                    window.open(event.url);
-                    return false;
-                }
-            }
-        });
-        $('#calendar').fullCalendar( 'addEventSource', {
-            events: [
-                {
-                    id: 1,
-                    title: 'All Day Event',
-                    start: '2014-12-05'
-                },
-                {
-                    title: 'Click for Google',
-                    url: 'http://google.com/',
-                    start: '2014-12-09'
-                }
-            ]
-        } )
     }
 
 
     //获取url里参数填充到input[type="hidden"]
-    var paramRoleId = getQueryString('roleId');
-    var paramMemberId = getQueryString('memberId');
-    var inputQ = '<input type="hidden" name="q" value="'+paramQ+'">';
+    //var paramRoleId = getQueryString('roleId');
+    //var paramMemberId = getQueryString('memberId');
+    //var inputQ = '<input type="hidden" name="q" value="'+paramQ+'">';
     var inputRoleId = '<input type="hidden" name="roleId" value="'+paramRoleId+'">';
+    var inputMemberId = '<input type="hidden" name="memberId" value="'+paramMemberId+'">';
     if(paramQ){
         $('.inputQ').val(paramQ);
     }
     //if(paramRoleId){
-    //    $('.paramInput').append(inputRoleId);
+    //    $('.inputRoleId').val(paramRoleId);
     //}
+    //if(paramMemberId){
+    //    $('.inputMemberId').val(paramMemberId);
+    //}
+    if(paramRoleId){
+        $('.paramInput').append(inputRoleId);
+    }
+    if(paramMemberId){
+        $('.paramInput').append(inputMemberId)
+    }
 })

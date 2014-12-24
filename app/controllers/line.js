@@ -165,3 +165,16 @@ exports.exit = function (req, res) {
             });
     }
 }
+
+//增加新成员
+exports.addMember = function(req,res){
+    var newMemberName = req.query.name;
+    if(newMemberName){
+        User
+            .find({name:new RegExp(newMemberName+'.*','i')},{_id:1,name:1})
+            .exec(function(err,users){
+                res.json(users)
+            })
+    }
+}
+

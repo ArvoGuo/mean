@@ -15,21 +15,24 @@ block content
                      input.form-control(type="text",name="line[desc]",value="#{line.desc}")
             .form-group
                 label.col-sm-2.control-label 业务成员
-                .col-sm-10
+                div#added-member.col-sm-10
                     each user in users
-                        label.role-select
-                            if line._id
-                                - for (var i=0;i<line.members.length;++i)
-                                    if line.members[i]
-                                        if ((line.members[i]).toString() === (user._id).toString())
+                        if line._id
+                            - for (var i=0;i<line.members.length;i++)
+                                if line.members[i]
+                                    if ((line.members[i]).toString() === (user._id).toString())
+                                        label.role-select
                                             input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}",checked)
-                                        else
-                                            input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}")
-                                span(style="margin-left:5px") #{user.name}
-                            else
-                                input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}")
-                                span(style="margin-left:5px") #{user.name}
-
+                                            span(style="margin-left:5px") #{user.name}
+                        else
+                            input(style="margin-left:10px",type="checkbox",name="line[members]",value="#{user._id}")
+                            span(style="margin-left:5px") #{user.name}
+                .col-sm-10
+                    label.col-sm-3 输入花名添加新成员
+                    label.col-sm-5
+                        input.form-control.new-member-input(type="text",value)
+                        div#relatedMember.col-sm-5.form-control(style="height:auto;display:none")
             .form-group
                 .col-sm-offset-2.col-sm-10
                     button.btn.btn-default(type="submit") 保存
+    script(src="/js/addNewMember.js")

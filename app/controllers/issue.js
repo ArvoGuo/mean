@@ -441,6 +441,7 @@ exports.allIssueJson = function(req,res){
 exports.selectRole = function(req,res){
     var q = req.query.q;
     var roleId = req.query.roleId;
+    console.log('selectedroleid:'+roleId);
     //查找到业务线名字和关键词相同的所有业务
     if(q){
         //正则匹配关键字
@@ -525,11 +526,15 @@ exports.selectRole = function(req,res){
     }
 }
 
+
 //业务线-资源占用,日历Json数组
 exports.selectJson = function(req,res){
     var q = req.query.q;
     var roleId = req.query.roleId;
     var memberId = req.query.memberId;
+    console.log('roleId:'+roleId);
+    console.log('q:'+q);
+    console.log('memberId:'+memberId);
     //查找到业务线名字和关键词相同的所有业务
     if(q){
         //正则匹配关键字
@@ -541,18 +546,31 @@ exports.selectJson = function(req,res){
                 var lineId = lines[i]._id;
                 lineIdArray.push(lineId);
             }
-            if(memberId){
-                //列表展示这些业务线的所有需求
-                Issue
-                    //查看相应角色的需求
-                    .find({belongLineId:{$in:lineIdArray},members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1})
-                    .exec(function(err,issues){
-                        if(err){
-                            console.log(err)
-                        }else{
-                            res.json(issues)
-                        }
-                    })
+            if(roleId){
+                if(memberId){
+                    //列表展示这些业务线的所有需求
+                    Issue
+                        //查看相应角色的需求
+                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]},members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1})
+                        .exec(function(err,issues){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                res.json(issues)
+                            }
+                        })
+                }else{
+                    Issue
+                        //查看相应角色的需求
+                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]}},{_id:0,title:1,start:1,end:1,url:1})
+                        .exec(function(err,issues){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                res.json(issues)
+                            }
+                        })
+                }
             }else{
                 //列表展示这些业务线的所有需求
                 Issue
@@ -586,7 +604,6 @@ exports.selectJson = function(req,res){
                 Issue
                     .find({},{_id:0,title:1,start:1,end:1,url:1})
                     .exec(function(err,issues){
-                        console.log('issuesjson:'+issues);
                         if(err){
                             console.log(err)
                         }else{

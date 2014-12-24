@@ -29,6 +29,10 @@ module.exports = function(app){
     app.post('/admin/line',User.signinRequired,Line.save);
     app.get('/admin/line/list',User.signinRequired,Line.list);
     app.post('/admin/line/list',User.signinRequired,Line.del);
+    //业务线增加成员
+    app.post('/admin/line/addMember',User.signinRequired,Line.addMember);
+    app.get('/admin/line/addMember',User.signinRequired,Line.addMember);
+
     //需求创建
     app.get('/issue/:id',Issue.detail);
     app.get('/admin/issue/new',User.signinRequired,Issue.new);
@@ -36,10 +40,12 @@ module.exports = function(app){
     app.post('/admin/issue',User.signinRequired,Issue.save);
     app.get('/admin/issue/list',User.signinRequired,Issue.list);
     app.post('/admin/issue/list',User.signinRequired,Issue.del);
+
     //我的主页
     app.get('/admin/line/list/my',User.signinRequired,Issue.my);
     app.get('/admin/line/list/myIssueUnallocated',User.signinRequired,Issue.myIssueUnallocated);
     app.post('/admin/line/list/my',User.signinRequired,Issue.allocate);
+
     //业务线
     //我的主页-已认领的需求
     app.get('/admin/line/list/myAllocatedJson',User.signinRequired,Issue.myAllocatedJson);
