@@ -154,7 +154,6 @@ exports.save = function (req, res) {
     }
 };
 
-
 //需求列表页
 exports.list = function (req, res) {
     Issue
@@ -526,7 +525,6 @@ exports.selectRole = function(req,res){
     }
 }
 
-
 //业务线-资源占用,日历Json数组
 exports.selectJson = function(req,res){
     var q = req.query.q;
@@ -551,7 +549,7 @@ exports.selectJson = function(req,res){
                     //列表展示这些业务线的所有需求
                     Issue
                         //查看相应角色的需求
-                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]},members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1})
+                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]},members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1,members:1})
                         .exec(function(err,issues){
                             if(err){
                                 console.log(err)
@@ -562,7 +560,7 @@ exports.selectJson = function(req,res){
                 }else{
                     Issue
                         //查看相应角色的需求
-                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]}},{_id:0,title:1,start:1,end:1,url:1})
+                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]}},{_id:0,title:1,start:1,end:1,url:1,members:1})
                         .exec(function(err,issues){
                             if(err){
                                 console.log(err)
@@ -575,7 +573,7 @@ exports.selectJson = function(req,res){
                 //列表展示这些业务线的所有需求
                 Issue
                     //查看相应角色的需求
-                    .find({belongLineId:{$in:lineIdArray}},{_id:0,title:1,start:1,end:1,url:1})
+                    .find({belongLineId:{$in:lineIdArray}},{_id:0,title:1,start:1,end:1,url:1,members:1})
                     .exec(function(err,issues){
                         if(err){
                             console.log(err)
@@ -591,7 +589,7 @@ exports.selectJson = function(req,res){
             if(memberId){
                 console.log('memberId:'+memberId);
                 Issue
-                    .find({members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1})
+                    .find({members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1,members:1})
                     .exec(function(err,issues){
                         console.log('issuesjson:'+issues);
                         if(err){
@@ -602,7 +600,7 @@ exports.selectJson = function(req,res){
                     })
             }else{
                 Issue
-                    .find({},{_id:0,title:1,start:1,end:1,url:1})
+                    .find({},{_id:0,title:1,start:1,end:1,url:1,members:1})
                     .exec(function(err,issues){
                         if(err){
                             console.log(err)
@@ -613,5 +611,71 @@ exports.selectJson = function(req,res){
             }
 
         })
+    }
+}
+
+//业务线-资源占用新
+exports.selectRoleNew = function(req,res){
+    res.render('lineRoleNew');
+}
+
+//输入业务线关键词返回业务线
+exports.returnLine = function(req,res){
+    var lineName = req.query.name;
+    if(lineName){
+        Line
+            .find({name:new RegExp(lineName+'.*','i')},{_id:1,name:1})
+            .exec(function(err,lines){
+                res.json(lines)
+            })
+    }
+}
+
+//选择角色后返回该角色下成员
+exports.returnMember = function(req,res){
+    var lineName = req.query.name;
+    var roleId = req.query.id;
+    if(lineName&&roleId){
+        Line
+            .find({name:new RegExp(lineName+'.*','i')})
+            .exec(function(err,lines){
+                console.log('lines:'+lines);
+                var lineLength = lines.length;
+                var lineIdArray = [];
+                //获取所有我所在的业务线的业务线id，组成数组
+                for(var i=0;i<lineLength;i++){
+                    var lineId = lines[i]._id;
+                    lineIdArray.push(lineId);
+                }
+                Issue
+                    .find({belongLineId:{$in:lineIdArray}})
+                    .exec(function(err,issues){
+                        User.find({issues:{$in:issues},role:roleId},function(err,users){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                res.json(users)
+                            }
+                        })
+                    })
+            })
+    }
+
+}
+
+exports.selectJsonNew = function(req,res){
+    var lineId = req.query.lineId;
+    var roleId = req.query.roleId;
+    var memberId = req.query.memberId;
+    if(lineId&&roleId&&memberId){
+        Issue
+            .find({belongLineId:lineId,allocatedRole:{$in:[roleId]},members:{$in:[memberId]}})
+            .exec(function(err,issues){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.json(issues);
+                }
+            })
     }
 }

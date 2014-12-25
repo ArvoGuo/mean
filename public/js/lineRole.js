@@ -9,10 +9,9 @@ $(document).ready(function() {
         if (r != null) return decodeURI(r[2]); return null;
     }
     var paramQ = getQueryString('q');
-    //var paramRoleId = getQueryString('roleId');
+    var paramRoleId = getQueryString('roleId');
     var paramMemberId = getQueryString('memberId');
     console.log('paramQ:'+paramQ);
-    var paramRoleId;
     console.log('paramRoleId:'+paramRoleId);
     console.log('paramMemberId:'+paramMemberId);
 
@@ -51,26 +50,4 @@ $(document).ready(function() {
         });
     }
 
-
-    //获取url里参数填充到input[type="hidden"]
-    //var paramRoleId = getQueryString('roleId');
-    //var paramMemberId = getQueryString('memberId');
-    //var inputQ = '<input type="hidden" name="q" value="'+paramQ+'">';
-    var inputRoleId = '<input type="hidden" name="roleId" value="'+paramRoleId+'">';
-    var inputMemberId = '<input type="hidden" name="memberId" value="'+paramMemberId+'">';
-    if(paramQ){
-        $('.inputQ').val(paramQ);
-    }
-    //if(paramRoleId){
-    //    $('.inputRoleId').val(paramRoleId);
-    //}
-    //if(paramMemberId){
-    //    $('.inputMemberId').val(paramMemberId);
-    //}
-    if(paramRoleId){
-        $('.paramInput').append(inputRoleId);
-    }
-    if(paramMemberId){
-        $('.paramInput').append(inputMemberId)
-    }
 })

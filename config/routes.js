@@ -56,9 +56,16 @@ module.exports = function(app){
     //退出业务线
     app.post('/admin/line/my',User.signinRequired,Line.exit);
     //业务线-资源占用
-    app.get('/admin/line/role',User.signinRequired,Issue.selectRole);
+    //app.get('/admin/line/role',User.signinRequired,Issue.selectRole);
+    app.get('/admin/line/role',User.signinRequired,Issue.selectRoleNew);
+    //输入业务线关键词返回业务线
+    app.post('/admin/line/role',User.signinRequired,Issue.returnLine);
+    //选择角色后返回该角色下地成员
+    app.post('/admin/line/chooseRole',User.signinRequired,Issue.returnMember);
+
     //业务线-资源占用Json数组
-    app.get('/admin/line/role/selectJson',User.signinRequired,Issue.selectJson);
+    //app.get('/admin/line/role/selectJson',User.signinRequired,Issue.selectJson);
+    app.get('/admin/line/role/selectJson',User.signinRequired,Issue.selectJsonNew);
     //业务线-需求列表
     app.get('/admin/all/issue/line',User.signinRequired,Issue.all);
     //业务线-需求列表Json数组
