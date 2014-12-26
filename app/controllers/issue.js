@@ -438,190 +438,12 @@ exports.allIssueJson = function(req,res){
 
 //业务线-资源占用
 exports.selectRole = function(req,res){
-    var q = req.query.q;
-    var roleId = req.query.roleId;
-    console.log('selectedroleid:'+roleId);
-    //查找到业务线名字和关键词相同的所有业务
-    if(q){
-        //正则匹配关键字
-        Line.find({name:new RegExp(q+'.*','i')},function(err,lines){
-            var lineLength = lines.length;
-            var lineIdArray = [];
-            //获取所有我所在的业务线的业务线id，组成数组
-            for(var i=0;i<lineLength;i++){
-                var lineId = lines[i]._id;
-                lineIdArray.push(lineId);
-            }
-            //列表展示这些业务线的所有需求
-            if(roleId){
-                Issue
-                    .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]}})
-                    .exec(function(err,issues){
-                        //查找user里，有这些需求的用户，且role为roleId
-                        User.find({issues:{$in:issues},role:roleId},function(err,users){
-                            if(err){
-                                console.log(err)
-                            }else{
-                                res.render('lineRole',{
-                                    title: '业务线-需求列表',
-                                    users:users
-                                })
-                            }
-                        })
-                    })
-            }else{
-                Issue
-                    .find({belongLineId:{$in:lineIdArray}})
-                    .exec(function(err,issues){
-                        User.find({issues:{$in:issues}},function(err,users){
-                            if(err){
-                                console.log(err)
-                            }else{
-                                res.render('lineRole',{
-                                    title: '业务线-需求列表',
-                                    users:users
-                                })
-                            }
-                        })
-                    })
-            }
-
-        })
-    }else{
-        Line.find({},function(err,lines){
-            if(roleId){
-                Issue
-                    .find({allocatedRole:{$in:[roleId]}})
-                    .exec(function(err,issues){
-                        //查找user里，有这些需求的用户，且role为roleId
-                        User.find({issues:{$in:issues},role:roleId},function(err,users){
-                            if(err){
-                                console.log(err)
-                            }else{
-                                res.render('lineRole',{
-                                    title: '业务线-需求列表',
-                                    users:users
-                                })
-                            }
-                        })
-                    })
-            }else{
-                Issue
-                    .find({})
-                    .exec(function(err,issues){
-                        User.find({issues:{$in:issues}},function(err,users){
-                            if(err){
-                                console.log(err)
-                            }else{
-                                res.render('lineRole',{
-                                    title: '业务线-需求列表',
-                                    users:users
-                                })
-                            }
-                        })
-                    })
-            }
-        })
-    }
-}
-
-//业务线-资源占用,日历Json数组
-exports.selectJson = function(req,res){
-    var q = req.query.q;
-    var roleId = req.query.roleId;
-    var memberId = req.query.memberId;
-    console.log('roleId:'+roleId);
-    console.log('q:'+q);
-    console.log('memberId:'+memberId);
-    //查找到业务线名字和关键词相同的所有业务
-    if(q){
-        //正则匹配关键字
-        Line.find({name:new RegExp(q+'.*','i')},function(err,lines){
-            var lineLength = lines.length;
-            var lineIdArray = [];
-            //获取所有我所在的业务线的业务线id，组成数组
-            for(var i=0;i<lineLength;i++){
-                var lineId = lines[i]._id;
-                lineIdArray.push(lineId);
-            }
-            if(roleId){
-                if(memberId){
-                    //列表展示这些业务线的所有需求
-                    Issue
-                        //查看相应角色的需求
-                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]},members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1,members:1})
-                        .exec(function(err,issues){
-                            if(err){
-                                console.log(err)
-                            }else{
-                                res.json(issues)
-                            }
-                        })
-                }else{
-                    Issue
-                        //查看相应角色的需求
-                        .find({belongLineId:{$in:lineIdArray},allocatedRole:{$in:[roleId]}},{_id:0,title:1,start:1,end:1,url:1,members:1})
-                        .exec(function(err,issues){
-                            if(err){
-                                console.log(err)
-                            }else{
-                                res.json(issues)
-                            }
-                        })
-                }
-            }else{
-                //列表展示这些业务线的所有需求
-                Issue
-                    //查看相应角色的需求
-                    .find({belongLineId:{$in:lineIdArray}},{_id:0,title:1,start:1,end:1,url:1,members:1})
-                    .exec(function(err,issues){
-                        if(err){
-                            console.log(err)
-                        }else{
-                            res.json(issues)
-                        }
-                    })
-            }
-
-        })
-    }else{
-        Line.find({},function(err,lines){
-            if(memberId){
-                console.log('memberId:'+memberId);
-                Issue
-                    .find({members:{$in:[memberId]}},{_id:0,title:1,start:1,end:1,url:1,members:1})
-                    .exec(function(err,issues){
-                        console.log('issuesjson:'+issues);
-                        if(err){
-                            console.log(err)
-                        }else{
-                            res.json(issues)
-                        }
-                    })
-            }else{
-                Issue
-                    .find({},{_id:0,title:1,start:1,end:1,url:1,members:1})
-                    .exec(function(err,issues){
-                        if(err){
-                            console.log(err)
-                        }else{
-                            res.json(issues)
-                        }
-                    })
-            }
-
-        })
-    }
-}
-
-//业务线-资源占用新
-exports.selectRoleNew = function(req,res){
-    res.render('lineRoleNew');
+    res.render('lineRole');
 }
 
 //输入业务线关键词返回业务线
 exports.returnLine = function(req,res){
-    var lineName = req.query.name;
+    var lineName = req.query.lineName;
     if(lineName){
         Line
             .find({name:new RegExp(lineName+'.*','i')},{_id:1,name:1})
@@ -633,8 +455,8 @@ exports.returnLine = function(req,res){
 
 //选择角色后返回该角色下成员
 exports.returnMember = function(req,res){
-    var lineName = req.query.name;
-    var roleId = req.query.id;
+    var lineName = req.query.lineName;
+    var roleId = req.query.roleId;
     if(lineName&&roleId){
         Line
             .find({name:new RegExp(lineName+'.*','i')})
@@ -663,11 +485,38 @@ exports.returnMember = function(req,res){
 
 }
 
-exports.selectJsonNew = function(req,res){
+//业务线-资源占用,日历Json数组
+exports.selectJson = function(req,res){
     var lineId = req.query.lineId;
     var roleId = req.query.roleId;
     var memberId = req.query.memberId;
-    if(lineId&&roleId&&memberId){
+    console.log('lineId:'+lineId);
+    console.log('roleId:'+roleId);
+    console.log('memberId:'+memberId);
+    if(lineId&&!roleId&&!memberId){
+        console.log('lineId&&!roleId&&!memberid');
+        Issue
+            .find({belongLineId:lineId})
+            .exec(function(err,issues){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.json(issues);
+                }
+            })
+    }else if(lineId&&roleId&&!memberId){
+        console.log('lineId&&roleId&&!memberId');
+        Issue
+            .find({belongLineId:lineId,allocatedRole:{$in:[roleId]}})
+            .exec(function(err,issues){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.json(issues);
+                }
+            })
+    }else if(lineId&&roleId&&memberId){
+        console.log('lineId&&roleId&&memberId');
         Issue
             .find({belongLineId:lineId,allocatedRole:{$in:[roleId]},members:{$in:[memberId]}})
             .exec(function(err,issues){

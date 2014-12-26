@@ -10,6 +10,7 @@ block content
                         th 创建人
                         th 创建时间
                         th 成员
+                        th 查看详情
                         th 退出该业务线
                     tbody
                 each item in lines
@@ -22,6 +23,7 @@ block content
                             if item.members
                                 each member in item.members
                                     span #{member.name}&nbsp;&nbsp;
+                        td: a.btn.btn-info.btn-xs(target="_blank",href="/line/#{item._id}") 查看
                         td
                             button.btn.btn-danger.exit.btn-xs(type="button",data-id="#{item._id}") 退出
     script(src="/js/exit.js")
