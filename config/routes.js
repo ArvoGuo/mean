@@ -23,7 +23,7 @@ module.exports = function(app){
     //判断登录是否中间件
     app.get('/admin/user/list',User.signinRequired,User.list);
     //业务线创建
-    app.get('/line/:id',Line.detail);
+    app.get('/line/:id',User.signinRequired,Line.detail);
     app.get('/admin/line/new',User.signinRequired,Line.new);
     app.get('/admin/line/update/:id',User.signinRequired,Line.update);
     app.post('/admin/line',User.signinRequired,Line.save);
@@ -34,7 +34,7 @@ module.exports = function(app){
     app.get('/admin/line/addMember',User.signinRequired,Line.addMember);
 
     //需求创建
-    app.get('/issue/:id',Issue.detail);
+    app.get('/issue/:id',User.signinRequired,Issue.detail);
     app.get('/admin/issue/new',User.signinRequired,Issue.new);
     app.get('/admin/issue/update/:id',User.signinRequired,Issue.update);
     app.post('/admin/issue',User.signinRequired,Issue.save);
