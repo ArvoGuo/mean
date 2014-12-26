@@ -2,11 +2,6 @@ extends ../layout
 block content
     .container
         .row
-            .alert.alert-success.alert-dismissible(role="alert")
-                button.close(type="button",data-dismiss="alert")
-                    span(aria-hidden="true") &times;
-                    span.sr-only Close
-                您已成功创建 #{line.name} 业务线！
             .col-md-6.col-md-offset-2
                 dl.dl-horizontal
                     dt 业务名称:
@@ -30,10 +25,11 @@ block content
                         if line.members
                             each member in line.members
                                 span #{member.name}&nbsp;&nbsp;
-                    dt
-                        a.btn.btn-success.btn-xs(href="/admin/line/update/#{line._id}") 修改
-                    //dd
-                    //    button.btn.btn-danger.del.btn-xs(type="button",data-id="#{line._id}") 删除
+                    if(user._id === line.creator._id.toString())
+                        dt
+                            a.btn.btn-success.btn-xs(href="/admin/line/update/#{line._id}") 修改
+                        //dd
+                        //    button.btn.btn-danger.del.btn-xs(type="button",data-id="#{line._id}") 删除
 
 
 
