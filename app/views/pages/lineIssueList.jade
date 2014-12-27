@@ -25,7 +25,6 @@ block content
                                 th 需求状态
                                 th 提醒
                                 th 查看详情
-                                th 修改
                         tbody
                         each issue in issues
                             tr(class="issue-id-#{issue._id}")
@@ -66,7 +65,6 @@ block content
                                     else
                                         span 所有角色均认领了需求
                                 td: a.btn.btn-info.btn-xs(target="_blank",href="/issue/#{issue._id}") 查看
-                                td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
                 .tab-pane(id="panel-2").active
                     #calendar(style="margin-top:10px;visibility:hidden;")
     link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")

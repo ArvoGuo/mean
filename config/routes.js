@@ -20,15 +20,21 @@ module.exports = function(app){
     app.get('/signin',User.showSignin);
     app.get('/signup',User.showSignup);
     app.get('/logout',User.logout);
-    //判断登录是否中间件
+
+    //管理员-用户管理
     app.get('/admin/user/list',User.signinRequired,User.list);
+    app.post('/admin/user/list',User.signinRequired,User.del);
+
     //业务线创建
     app.get('/line/:id',User.signinRequired,Line.detail);
     app.get('/admin/line/new',User.signinRequired,Line.new);
     app.get('/admin/line/update/:id',User.signinRequired,Line.update);
     app.post('/admin/line',User.signinRequired,Line.save);
+
+    //管理员-业务线管理
     app.get('/admin/line/list',User.signinRequired,Line.list);
     app.post('/admin/line/list',User.signinRequired,Line.del);
+
     //业务线增加成员
     app.post('/admin/line/addMember',User.signinRequired,Line.addMember);
     app.get('/admin/line/addMember',User.signinRequired,Line.addMember);
@@ -38,6 +44,8 @@ module.exports = function(app){
     app.get('/admin/issue/new',User.signinRequired,Issue.new);
     app.get('/admin/issue/update/:id',User.signinRequired,Issue.update);
     app.post('/admin/issue',User.signinRequired,Issue.save);
+
+    //管理员-需求列表管理
     app.get('/admin/issue/list',User.signinRequired,Issue.list);
     app.post('/admin/issue/list',User.signinRequired,Issue.del);
 

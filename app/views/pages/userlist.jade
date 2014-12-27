@@ -7,18 +7,28 @@ block content
                 table.table.table-hover.table-bordered
                     thead
                         tr
-                            th 登录名
                             th 注册时间
-                            th 查看
-                            th 更新
+                            th 登录名
+                            th 角色
                             th 删除
                     tbody
                     each item in users
                         tr(class="item-id-#{item._id}")
-                            td #{item.name}
                             td #{moment(item.meta.updateAt).format('YYYY-MM-DD HH:mm:ss')}
-                            td: a.btn.btn-info.btn-xs(target="_blank",href="../user/#{item._id}") 查看
-                            td: a.btn.btn-success.btn-xs(target="_blank",href="../admin/update/#{item._id}") 修改
+                            td #{item.name}
+                            td
+                                if(item.role == '0')
+                                    code 产品经理
+                                if(item.role == '1')
+                                    code 交互设计师
+                                if(item.role == '2')
+                                    code 视觉设计师
+                                if(item.role == '3')
+                                    code 前端开发工程师
+                                if(item.role == '4')
+                                    code 开发工程师
+                                if(item.role == '5')
+                                    code 测试工程师
                             td
                                 button.btn.btn-danger.del.btn-xs(type="button",data-id="#{item._id}") 删除
-    script(src="/js/admin.js")
+    script(src="/js/deluser.js")

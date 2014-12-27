@@ -39,6 +39,20 @@
                             else
                                 li
                                     a(href="/admin/issue/new") 新建需求
+                    if (user.level === 100)
+                        li.dropdown
+                            a.dropdown-toggle(href="#" data-toggle="dropdown")
+                                span 管理员入口
+                                span.caret
+                            ul.dropdown-menu(role="menu")
+                                li
+                                    a(href="/admin/line/list") 业务线管理
+                                li.divider
+                                li
+                                    a(href="/admin/issue/list") 需求管理
+                                li.divider
+                                li
+                                    a(href="/admin/user/list") 用户管理
                 li
                     if user
                         p.navbar-text.navbar-right

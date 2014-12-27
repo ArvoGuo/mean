@@ -69,15 +69,29 @@ exports.list = function(req,res){
     if(!user){
         return res.redirect('/signin');
     }
-    //if(user.role>10){
-        User.fetch(function(err,users){
-            if(err) console.log(err);
-            res.render('userlist',{
-                title: 'imooc 用户列表页',
-                users: users
-            })
+    User.fetch(function(err,users){
+        if(err) console.log(err);
+        res.render('userlist',{
+            title: '资源管理系统用户列表页',
+            users: users
         })
-    //}
+    })
+};
+
+//删除该用户
+//所有put/delete方法都可以使用post方法
+exports.del = function (req, res) {
+    var id = req.query.id;
+    if (id) {
+        User.remove({_id: id}, function (err, user) {
+            if (err) {
+                console.log(err)
+            }
+            else {
+                res.json({success: 1})
+            }
+        })
+    }
 };
 
 ////midware for user
