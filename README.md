@@ -1,22 +1,22 @@
 # GreatRMS
 
-## User && funtions
+## User and Funtions
 
 ### Administrator
-- manage user,lines,issues
+- Manage user,lines,issues
 
 ### Average users
 #### PD
-- create lines and issues
-- revise lines which he created
-- revise issues which he created or claimed
-- claim issues
-- exit lines
+- Create lines and issues
+- Revise lines which he has created
+- Revise issues which he has created or claimed
+- Claim issues
+- Exit lines
 
-#### Visual designers/Interaction designers/FE Engineer/Development Engineer/Test Engineer
-- claim issues
-- revise issues which he created or claimed
-- exit lines
+#### Visual Designers/Interaction Designers/FE Engineer/Development Engineer/Test Engineer
+- Claim issues
+- Revise issues which he created or claimed
+- Exit lines
 
 ## Getting Started
 - git clone https://github.com/xuyuan923/mean.git
