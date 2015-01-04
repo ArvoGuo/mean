@@ -1,6 +1,14 @@
 extends ../layout
 block content
     .container.col-sm-offset-1.col-md-8
+        if(issue.__v == 0)
+            .alert.alert-success.alert-dismissible(role="alert")
+                button.close(type="button",data-dismiss="alert")
+                    span(aria-hidden="true") &times;
+                    span.sr-only Close
+                | 您已成功创建
+                strong #{issue.title}
+                | 需求！
         form.form-horizontal
             h3.page-header 需求详情
             .form-group
@@ -119,17 +127,16 @@ block content
                             span 所有角色都认领了需求
             if(user._id === issue.creator._id.toString())
                 .form-group
-                    .col-sm-2.control-label
-                        a.btn.btn-success.btn-xs(href="/admin/issue/update/#{issue._id}") 修改
+                    .col-sm-4.control-label(style="margin-left:-100px")
+                        a.postMsg.btn.btn-success(href="/admin/issue/update/#{issue._id}") 修改
                     //.col-sm-10
                     //    .control-label
                     //    button.btn.btn-danger.del.btn-xs(type="button",data-id="#{issue._id}") 删除
             - for(var i=0;i<issue.members.length;i++)
                 if(user._id === issue.members[i]._id.toString() && user._id !== issue.creator._id.toString())
                     .form-group
-                        .col-sm-2.control-label
-                            a.btn.btn-success.btn-xs(href="/admin/issue/update/#{issue._id}") 修改
-
+                        .col-sm-4.control-label(style="margin-left:-100px")
+                            a.btn.btn-success(href="/admin/issue/update/#{issue._id}") 修改
     script(src="/js/admin.js")
 
 

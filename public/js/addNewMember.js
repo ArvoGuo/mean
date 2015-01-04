@@ -1,8 +1,8 @@
 /**
  * Created by cassie on 14/12/24.
  */
-//填写成员花名时，发送花名并返回用户id
 $(function(){
+    //填写成员花名时，发送花名并返回用户id
     $('.new-member-input').on('keyup',function(e){
         var $target = $(e.target);
         var newMemberName = $target[0].value;
@@ -33,5 +33,11 @@ $(function(){
                     })
                 }
             })
+    });
+
+    //点击提交按钮增加dotting打点
+    $('.postMsg').on('click',function(e){
+        var $target = $(e.target);
+        $target.append('<span class="dotting"></span>')
     })
 })

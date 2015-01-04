@@ -14,3 +14,11 @@ $('.datetimepicker').datetimepicker({
     minView: 2,
     forceParse: 0
 });
+
+//点击提交按钮增加dotting打点
+$(function(){
+    $('.postMsg').on('click',function(e){
+        var $target = $(e.target);
+        $target.append('<span class="dotting"></span>')
+    })
+})
