@@ -93,8 +93,9 @@ exports.save = function (req, res) {
         _line.save(function (err, line) {
             if (err) {
                 console.log(err)
+            }else{
+                res.redirect('/line/' + _line.id)
             }
-            res.redirect('/line/' + _line.id)
         })
     }
 };

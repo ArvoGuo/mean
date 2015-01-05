@@ -36,8 +36,26 @@ $(function(){
     });
 
     //点击提交按钮增加dotting打点
-    $('.postMsg').on('click',function(e){
-        var $target = $(e.target);
-        $target.append('<span class="dotting"></span>')
-    })
+    $('.postMsg').bind('click',function(e){
+        function a(callback){
+            e.preventDefault();
+            swal({
+                title: "Good job!",
+                text: "You clicked the button!",
+                type: "success",
+                timer: 2000
+            })
+            var $target = $(e.target);
+            $target.append('<span class="dotting"></span>');
+            callback();
+        }
+        function b(){
+            $('form').submit();
+        }
+        a(b);
+    });
 })
+
+
+
+

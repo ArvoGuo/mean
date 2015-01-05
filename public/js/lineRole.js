@@ -137,7 +137,6 @@ $(function(){
         console.log('paramLineId:'+paramLineId);
         console.log('paramRoleId:'+paramRoleId);
         console.log('paramMemberId:'+paramMemberId);
-
         var calendarUrl = '/admin/line/role/selectJson' + ((paramLineId !== undefined) ? '?lineId=' + paramLineId : '?lineId=') + ((paramRoleId !== undefined) ? '&roleId=' + paramRoleId : '&roleId=') + ((paramMemberId !== undefined) ? '&memberId=' + paramMemberId : '&memberId=')
         $('#calendar').fullCalendar('removeEventSource', calendarUrl);
         $('#calendar').fullCalendar('removeEvents');

@@ -26,7 +26,7 @@ block content
                         if line.members
                             each member in line.members
                                 span #{member.name}&nbsp;&nbsp;
-                    if(user._id === line.creator._id.toString())
+                    if(user._id === line.creator._id.toString() || user.level === 100)
                         dt
                             a.btn.btn-success(href="/admin/line/update/#{line._id}") 修改
                         //dd

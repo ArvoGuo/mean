@@ -125,7 +125,7 @@ block content
                                     code 测试
                         else
                             span 所有角色都认领了需求
-            if(user._id === issue.creator._id.toString())
+            if(user._id === issue.creator._id.toString() || user.level === 100)
                 .form-group
                     .col-sm-4.control-label(style="margin-left:-100px")
                         a.postMsg.btn.btn-success(href="/admin/issue/update/#{issue._id}") 修改
