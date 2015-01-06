@@ -15,10 +15,20 @@ $('.datetimepicker').datetimepicker({
     forceParse: 0
 });
 
-//点击提交按钮增加dotting打点
+//点击提交按钮增加dotting打点，并提示保存成功
 $(function(){
-    $('.postMsg').on('click',function(e){
+    $('.postMsg').bind('click',function(e){
+        e.preventDefault();
+        swal({
+            title: "Success!",
+            text: "您已成功保存该需求!",
+            type: "success",
+            timer: 2000
+        });
         var $target = $(e.target);
-        $target.append('<span class="dotting"></span>')
-    })
+        $target.append('<span class="dotting"></span>');
+        setTimeout(function(){
+            $('form').submit();
+        },2000);
+    });
 })

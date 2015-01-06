@@ -35,24 +35,20 @@ $(function(){
             })
     });
 
-    //点击提交按钮增加dotting打点
+    //点击提交按钮增加dotting打点，并提示保存成功
     $('.postMsg').bind('click',function(e){
-        function a(callback){
             e.preventDefault();
             swal({
-                title: "Good job!",
-                text: "You clicked the button!",
+                title: "Success!",
+                text: "您已成功保存该业务线!",
                 type: "success",
                 timer: 2000
-            })
+            });
             var $target = $(e.target);
             $target.append('<span class="dotting"></span>');
-            callback();
-        }
-        function b(){
-            $('form').submit();
-        }
-        a(b);
+            setTimeout(function(){
+                $('form').submit();
+            },2000);
     });
 })
 
