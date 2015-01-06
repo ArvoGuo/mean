@@ -17,7 +17,7 @@ block content
                     dd
                         if line.issues
                             each issue in line.issues
-                                p
+                                p(style="margin:0")
                                     a(href="/issue/#{issue._id}") #{issue.title}
                         else
                             p 该业务线上还未创建任何需求

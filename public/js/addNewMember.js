@@ -16,6 +16,7 @@ $(function(){
                     $('#relatedMember').children().remove();
                 }
                 if(results.length){
+                    $('#relatedMember li').remove();
                     for(var i=0;i<results.length;i++){
                         var userName = results[i].name;
                         var userId = results[i]._id;
