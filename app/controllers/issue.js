@@ -72,7 +72,7 @@ exports.update = function (req, res) {
 exports.save = function (req, res) {
     var id = req.body.issue._id;
     var issueObj = req.body.issue;
-    var roleLength = issueObj.role.length;
+    //var roleLength = issueObj.role.length;
     var _issue;
     //如果已创建issue,在这里修改
     if (id) {
@@ -130,13 +130,13 @@ exports.save = function (req, res) {
                 console.log(err)
             }
             if (lineId) {
-                console.log('roleLength:'+roleLength);
-                for(var i=0;i<roleLength;i++){
-                    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
-                }
-                for(var i=0;i<(roleLength-1);i++){
-                    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
-                }
+                //console.log('roleLength:'+roleLength);
+                //for(var i=0;i<roleLength;i++){
+                //    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
+                //}
+                //for(var i=0;i<(roleLength-1);i++){
+                //    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
+                //}
                 Issue.update({_id:id},{$pushAll:{unAllocatedRole:role}}).exec();
                 Issue.update({_id:id},{$set:{url:'/issue/'+id}}).exec();
                 Line.findById(lineId, function(err, line) {

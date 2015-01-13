@@ -23,3 +23,7 @@
 - npm install packages
 - run mongodb
 - run grunt
+
+## TODO
+- check form submit if required
+- divid pages
