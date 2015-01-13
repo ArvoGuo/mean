@@ -1,5 +1,13 @@
 module.exports = function(grunt){
     grunt.initConfig({
+        less: {
+            // 编译
+            compile: {
+                files: {
+                    'css/common.css': 'css/common.less'
+                }
+            }
+        },
         watch: {
             jade: {
                 files: ['views/**'],
@@ -9,10 +17,13 @@ module.exports = function(grunt){
             },
             js: {
                 files: ['public/js/**', 'models/**/*.js', 'schemas/**/*.js'],
-                //tasks: ['jshint'],
                 options: {
                     livereload: true
                 }
+            },
+            scripts: {
+                files: ['css/*.less'],
+                tasks: ['less']
             }
         },
 
@@ -35,12 +46,13 @@ module.exports = function(grunt){
         },
 
         concurrent: {
-            tasks: ['nodemon', 'watch'],
+            tasks: ['less','nodemon', 'watch'],
             options: {
                 logConcurrentOutput: true
             }
         }
     });
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');

@@ -1,0 +1,31 @@
+#leftBar{
+  position: absolute;
+  width: 220px;
+  left: 0;
+  background: #393939;
+  .left_menu_module{
+    overflow: hidden;
+    width: 220px;
+    li{
+      float: left;
+      width: 220px;
+      a{
+        color: #aeb2b7;
+        display: block;
+        padding: 15px 20px;
+        white-space: nowrap;
+        i{
+          display: inline;
+          margin-right: 10px;
+        }
+        span{
+          font-size: 14px;
+        }
+        &:hover,&.active{
+          color: #d84c31;
+          background: rgba(255,255,255,0.05);
+        }
+      }
+    }
+  }
+}
