@@ -4,7 +4,7 @@ module.exports = function(grunt){
             // 编译
             compile: {
                 files: {
-                    'css/common.css': 'css/common.less'
+                    'public/css/common.css': 'public/less/common.less'
                 }
             }
         },
@@ -22,7 +22,7 @@ module.exports = function(grunt){
                 }
             },
             scripts: {
-                files: ['css/*.less'],
+                files: ['public/less/*.less'],
                 tasks: ['less']
             }
         },
@@ -57,5 +57,5 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.option('force',true);
-    grunt.registerTask('default',['concurrent']);
+    grunt.registerTask('default',['less','concurrent']);
 }

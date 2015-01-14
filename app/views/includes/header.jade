@@ -1,4 +1,4 @@
-.navbar.navbar-default.navbar-static-top(role="navigation")
+#nav-panel.navbar-default.navbar-static-top(role="navigation")
     .container
         .navbar-header.col-md-2
             a.navbar-brand(href="/") 资源管理系统
@@ -53,7 +53,7 @@
                                 li.divider
                                 li
                                     a(href="/admin/user/list") 用户管理
-                li
+                li.user-info
                     if user
                         p.navbar-text.navbar-right
                             span 欢迎您：#{user.name}
@@ -68,11 +68,7 @@
    div.left_menu_top
        ul.left_menu_module
            li
-                a.active(href="#")
-                    i.glyphicon.glyphicon-eye-open
-                    span 发现
-           li
-               a(href="#")
+               a.active(href="#")
                    i.glyphicon.glyphicon-dashboard
                    span 我的任务
            li
@@ -81,11 +77,25 @@
                    span 我的业务线
            li
                a(href="#")
+                   i.glyphicon.glyphicon-eye-open
+                   span 发现
+           li.occupy
+               a(href="#")
                    i.glyphicon.glyphicon-list
                    span 资源占用
-               ul
-                   li 拍卖
-                   li 更多
+                   i.downmenu
+               if user
+                   ul
+                       if lines
+                           each item in lines
+                               li
+                                    a(href="#")
+                                        i.project
+                                        span(title) #{item.name}
+                       li
+                            a(href="#")
+                                i.more
+                                span 更多
    div.left_menu_bot
 #signupModal.modal.fade
     .modal-dialog
