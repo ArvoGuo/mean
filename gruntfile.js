@@ -4,7 +4,8 @@ module.exports = function(grunt){
             // 编译
             compile: {
                 files: {
-                    'public/css/common.css': 'public/less/common.less'
+                    'public/css/common.css': 'public/less/common.less',
+                    'public/css/myLine.css': 'public/less/myLine.less'
                 }
             }
         },

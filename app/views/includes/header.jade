@@ -66,13 +66,7 @@
                    span 资源占用
                    i.downmenu
                if user
-                   ul
-                       if lines
-                           each item in lines
-                               li
-                                    a(href="#")
-                                        i.project
-                                        span(title) #{item.name}
+                   ul.line-list-left
                        li
                             a(href="/admin/line/role")
                                 i.more

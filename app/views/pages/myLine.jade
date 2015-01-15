@@ -1,31 +1,21 @@
 extends ../layout
 block content
-    .container
+    .content-panel.container
         .row
-            table.table.table-hover.table-bordered
-                thead
-                    tr
-                        th 业务名称
-                        th 业务描述
-                        th 创建人
-                        th 创建时间
-                        th 成员
-                        th 查看详情
-                        th 退出该业务线
-                    tbody
+            ul.line-ul
                 each item in lines
-                    tr(class="item-id-#{item._id}")
-                        td #{item.name}
-                        td #{item.desc}
-                        td #{item.creator.name}
-                        td #{moment(item.meta.updateAt).format('YYYY-MM-DD')}
-                        td
-                            if item.members
-                                each member in item.members
-                                    span #{member.name}&nbsp;&nbsp;
-                        td: a.btn.btn-info.btn-xs(target="_blank",href="/line/#{item._id}") 查看
-                        td
-                            button.btn.btn-danger.exit.btn-xs(type="button",data-id="#{item._id}") 退出
+                    li.line-ul-li(class="item-id-#{item._id}")
+                        .wrapper
+                            p.title
+                                span.name #{item.name}
+                                span.date #{moment(item.meta.updateAt).format('YYYY/MM/DD')}
+                            p.intro #{item.desc}
+                            p.visit
+                                span
+                                    a.btn.btn-info.btn-xs(href="/line/#{item._id}") 查看
+                                span
+                                    button.btn.btn-danger.exit.btn-xs(type="button",data-id="#{item._id}") 退出
     link(href="/css/sweet-alert.css",rel="stylesheet")
+    link(href="/css/myLine.css",rel="stylesheet")
     script(src="/js/sweet-alert.js")
     script(src="/js/exit.js")

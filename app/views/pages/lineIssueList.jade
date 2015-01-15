@@ -64,7 +64,7 @@ block content
                                                 span 测试未认领
                                     else
                                         span 所有角色均认领了需求
-                                td: a.btn.btn-info.btn-xs(target="_blank",href="/issue/#{issue._id}") 查看
+                                td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
                 .tab-pane(id="panel-2").active
                     #calendar(style="margin-top:10px;visibility:hidden;")
     link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")

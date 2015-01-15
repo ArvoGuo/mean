@@ -114,6 +114,7 @@ html {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAANwAAADcBYx2BhQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACGSURBVDiN7ZKxDcJAEARn0TdBMaYA6+XgiyAmcBkOHFOEA+vlAnAxNPHSEj0SFpkJCHzRBbOjPelkmz1z2pU+BACEulzG6UxRJDg/bukpUDNMLcDap8XgLfPRwIXZ8t2FGaAZptYiW+Qq2jI/OeEtUKCTdVWgq7Vlokxc+7R8YwB0fOIfCF6grDwbYrxoWwAAAABJRU5ErkJggg==");
 }
 .content-panel {
-  margin-left: 220px;
+  width: 100%;
+  padding-left: 270px;
   background: #f9f9f7;
 }

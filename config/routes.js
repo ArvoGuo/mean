@@ -14,6 +14,10 @@ module.exports = function(app){
     })
     //首页
     app.get('/',Index.index);
+
+    //左侧资源占用业务线列表
+    app.post('/admin/line/list/left',User.signinRequired,Line.postPersonalLine);
+
     //用户
     app.post('/user/signup',User.signup);
     app.post('/user/signin',User.signin);

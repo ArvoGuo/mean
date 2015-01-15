@@ -187,3 +187,19 @@ exports.addMember = function(req,res){
     }
 }
 
+//左侧资源占用-登录用户所在业务线
+exports.postPersonalLine = function(req,res){
+    var userId = req.session.user._id;
+    if (userId) {
+        //首先找到我在的业务线组
+        Line
+            .find({members: userId})
+            .exec(function (err, lines) {
+                if(err) console.log(err)
+                else{
+                    res.json(lines);
+                }
+            })
+    }
+}
+

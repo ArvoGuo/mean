@@ -61,8 +61,8 @@ block content
                                                 span 测试未认领
                                     else
                                         span 所有角色均认领了需求
-                                td: a.btn.btn-info.btn-xs(target="_blank",href="/issue/#{issue._id}") 查看
-                                td: a.btn.btn-success.btn-xs(target="_blank",href="/admin/issue/update/#{issue._id}") 修改
+                                td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
+                                td: a.btn.btn-success.btn-xs(href="/admin/issue/update/#{issue._id}") 修改
                     #calendar-allocated.calendar(style="display:none;margin-top:10px")
                 .tab-pane(id="panel-2")
                     iframe(src="/admin/line/list/myIssueUnallocated",frameborder="0",style="width:100%;min-height:1000px")
