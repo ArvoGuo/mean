@@ -12,8 +12,8 @@ module.exports = function(app){
         app.locals.user = _user;
         next();
     })
-    //首页
-    app.get('/',Index.index);
+    //首页-我的任务
+    app.get('/',User.signinRequired,Issue.my);
 
     //左侧资源占用业务线列表
     app.post('/admin/line/list/left',User.signinRequired,Line.postPersonalLine);
@@ -54,7 +54,6 @@ module.exports = function(app){
     app.post('/admin/issue/list',User.signinRequired,Issue.del);
 
     //我的主页
-    app.get('/admin/line/list/my',User.signinRequired,Issue.my);
     app.get('/admin/line/list/myIssueUnallocated',User.signinRequired,Issue.myIssueUnallocated);
     app.post('/admin/line/list/my',User.signinRequired,Issue.allocate);
 

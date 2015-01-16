@@ -73,7 +73,7 @@ $(function(){
                     var b = new rerenderCalendar();
                     b;
                     if(!results.length){
-                        $('#select-member').show().find('.btn-group').append('<span class="error">该角色下没有相关成员</span>');
+                        $('#select-member').show().find('.btn-group').append('<span class="error" style="height:34px;line-height:34px">该角色下没有相关成员</span>');
                     };
                     if(results.length){
                         for(var i=0;i<results.length;i++){

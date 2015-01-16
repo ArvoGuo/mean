@@ -12,9 +12,13 @@ block content
                             p.intro #{item.desc}
                             p.visit
                                 span
-                                    a.btn.btn-info.btn-xs(href="/line/#{item._id}") 查看
+                                    a.btn.btn-default(href="/line/#{item._id}")
+                                        i.find-detail
+                                        查看
                                 span
-                                    button.btn.btn-danger.exit.btn-xs(type="button",data-id="#{item._id}") 退出
+                                    button.btn.btn-default.exit(type="button",data-id="#{item._id}")
+                                        i.btn-exit
+                                        退出
     link(href="/css/sweet-alert.css",rel="stylesheet")
     link(href="/css/myLine.css",rel="stylesheet")
     script(src="/js/sweet-alert.js")

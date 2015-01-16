@@ -5,21 +5,23 @@
         .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
                 if user
-                    li.dropdown
-                        a.dropdown-toggle(href="#" data-toggle="dropdown")
-                            span.glyphicon.glyphicon-plus
-                            span 新建
-                            span.caret
-                        ul.dropdown-menu(role="menu")
-                            if (user.role == 0)
+                    if(user.role == 0)
+                        li.dropdown
+                            a.dropdown-toggle(href="#" data-toggle="dropdown")
+                                span.glyphicon.glyphicon-plus
+                                span 新建
+                                span.caret
+                            ul.dropdown-menu(role="menu")
                                 li
                                     a(href="/admin/line/new") 新建业务线
                                 li.divider
                                 li
                                     a(href="/admin/issue/new") 新建需求
-                            else
-                                li
-                                    a(href="/admin/issue/new") 新建需求
+                    if(user.role != 0)
+                        li
+                            a(href="/admin/issue/new")
+                                span.glyphicon.glyphicon-plus
+                                span 新建需求
                     if (user.level === 100)
                         li.dropdown
                             a.dropdown-toggle(href="#" data-toggle="dropdown")
@@ -49,7 +51,7 @@
    div.left_menu_top
        ul.left_menu_module
            li
-               a.active(href="/admin/line/list/my")
+               a.active(href="/")
                    i.glyphicon.glyphicon-dashboard
                    span 我的任务
            li
