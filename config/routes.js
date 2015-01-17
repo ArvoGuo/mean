@@ -5,6 +5,7 @@ var Index = require('../app/controllers/index');
 var User = require('../app/controllers/user');
 var Line = require('../app/controllers/line');
 var Issue = require('../app/controllers/issue');
+//var Nav = require('../app/controllers/nav');
 module.exports = function(app){
     //预处理用户
     app.use(function(req,res,next){
@@ -75,6 +76,10 @@ module.exports = function(app){
     app.post('/admin/line/chooseRole',User.signinRequired,Issue.returnMember);
     //业务线-资源占用日历Json数组
     app.get('/admin/line/role/selectJson',User.signinRequired,Issue.selectJson);
+    //资源占用-指定业务线
+    app.get('/admin/role/line',User.signinRequired,Issue.selectLine);
+
+
 
     //业务线-需求列表
     app.get('/admin/all/issue/line',User.signinRequired,Issue.all);

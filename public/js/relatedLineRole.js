@@ -1,48 +1,22 @@
 /**
- * Created by cassie on 14/12/25.
+ * Created by cassie on 15/1/17.
+ * 我所在业务线-资源占用
  */
 $(function(){
-    //发送业务线关键词并返回业务线id
-    $('.line-name-input').on('keyup',function(e){
-        var $target = $(e.target);
-        var lineName = $target[0].value;
-        var ul = [];
-        $.ajax({
-            type: 'POST',
-            url: '/admin/line/role?lineName='+lineName
-        })
-            .done(function(results){
-                if(!results.length){
-                    $('#related-line').children().remove();
-                    $('#select-role').hide();
-                }
-                if(results.length){
-                    $('#related-line li').remove();
-                    for(var i=0;i<results.length;i++){
-                        var relatedLineName = results[i].name;
-                        var relatedLineId = results[i]._id;
-                        var li = "<li data-id="+relatedLineId+" "+"data-name="+relatedLineName+">"+relatedLineName+"<span class='glyphicon glyphicon-plus' style='float:right'></span>"+"</li>";
-                        ul.push(li);
-                    }
-                    $('#related-line').show().append(ul);
-
-                    //点击下拉业务线，将该业务线选中并添加
-                    $('#related-line li').click(function(e){
-                        $('#selectLine').remove();
-                        $('#selectRole').remove();
-                        $('#selectMember').remove();
-                        $('#select-role').show();
-                        var $targetLi = $(e.target);
-                        var selectedLineName = $targetLi.data('name');
-                        var selectedLineId = $targetLi.data('id');
-                        var lineSelect = "<div id='selectLine'><span class='selectLine'>业务线:<span data-id="+selectedLineId+" "+"class='select-line'>"+selectedLineName+"</span></span><i class='toright'></i></div>";
-                        $('#currentOption').append(lineSelect);
-                        var a = new renderCalendar();
-                        a;
-                    });
-                }
-            })
-    });
+    //获取url中的业务线名称
+    $(document).ready(function(e){
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]); return null;
+        }
+        var lineName = getQueryString('lineName');
+        var lineId = getQueryString('lineId');
+        var lineSelect = "<div id='selectLine'><span class='selectLine'>业务线:<span data-id="+lineId+" "+"class='select-line'>"+lineName+"</span></span><i class='toright'></i></div>";
+        $('#currentOption').append(lineSelect);
+        var a = new renderCalendar();
+        a;
+    })
 
     //选择角色，发送角色ID，返回该角色的相关人员
     //选择角色，给选中角色加上selected，button-primary样式

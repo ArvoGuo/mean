@@ -55,9 +55,10 @@ exports.new = function (req, res) {
 //需求更新
 exports.update = function (req, res) {
     var id = req.params.id;
+    var userId = req.session.user._id;
     if (id) {
         Issue.findById(id, function (err, issue) {
-            Line.find({},function(err,lines){
+            Line.find({members: userId},function(err,lines){
                 res.render('issue', {
                     title: '需求更新页面',
                     issue: issue,
@@ -527,4 +528,9 @@ exports.selectJson = function(req,res){
                 }
             })
     }
+}
+
+//资源占用-我所在的业务线
+exports.selectLine = function(req,res){
+    res.render('relatedLineRole');
 }
