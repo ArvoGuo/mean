@@ -5,7 +5,8 @@ module.exports = function(grunt){
             compile: {
                 files: {
                     'public/css/common.css': 'public/less/common.less',
-                    'public/css/myLine.css': 'public/less/myLine.less'
+                    'public/css/myLine.css': 'public/less/myLine.less',
+                    'public/css/lineRole.css': 'public/less/lineRole.less'
                 }
             }
         },

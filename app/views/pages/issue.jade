@@ -1,6 +1,6 @@
 extends ../layout
 block content
-    .container.col-md-offset-3.col-md-8
+    .container.col-md-offset-3.col-md-8(style="margin-top:50px")
         form.form-horizontal(method="post" action="/admin/issue")
             input(type="hidden",name="issue[creator]",value="#{issue.creator}")
             if issue._id
@@ -12,11 +12,11 @@ block content
                 label.col-sm-2.control-label 所属业务线
                 each line in lines
                     if issue.belongLineId == line.id
-                        label.radio-inline
+                        label.radio-inline(style="padding-left:34px")
                             input(type="radio",name="issue[belongLineId]",value=line._id,checked)
                             | #{line.name}
                     else
-                        label.radio-inline
+                        label.radio-inline(style="padding-left:34px")
                             input(type="radio",name="issue[belongLineId]",value=line._id)
                             | #{line.name}
             .form-group
@@ -83,7 +83,7 @@ block content
                             option(value="7") 发布
             .form-group
                 label.col-sm-2.control-label 需求所需角色
-                .col-sm-10
+                .col-sm-10(style="height:26px;line-height:29px")
                     label.role-select
                         if (issue.role[0] == 0)
                             input(type="checkbox",name="issue[role]",value="0",checked)

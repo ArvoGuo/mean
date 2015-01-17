@@ -1,10 +1,11 @@
 extends ../layout
 block content
-    .container
+    .container.content-panel
         .row
             .col-md-5
                 form(method="POST", action="/user/signin")
                     .modal-body
+                        h3.page-header 请先登录
                         .form-group
                             label(for="signinName") 用户名
                             input#signinName.form-control(name="user[name]", type="text")

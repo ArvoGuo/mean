@@ -28,14 +28,14 @@ $(function(){
 
                     //点击下拉业务线，将该业务线选中并添加
                     $('#related-line li').click(function(e){
-                        $('.selectLine').remove();
-                        $('.selectRole').remove();
-                        $('.selectMember').remove();
+                        $('#selectLine').remove();
+                        $('#selectRole').remove();
+                        $('#selectMember').remove();
                         $('#select-role').show();
                         var $targetLi = $(e.target);
                         var selectedLineName = $targetLi.data('name');
                         var selectedLineId = $targetLi.data('id');
-                        var lineSelect = "<span class='selectLine'>业务线:<span data-id="+selectedLineId+" "+"class='select-line'>"+selectedLineName+"</span>></span>";
+                        var lineSelect = "<div id='selectLine'><span class='selectLine'>业务线:<span data-id="+selectedLineId+" "+"class='select-line'>"+selectedLineName+"</span></span><i class='toright'></i></div>";
                         $('#currentOption').append(lineSelect);
                         var a = new renderCalendar();
                         a;
@@ -49,7 +49,7 @@ $(function(){
     $('.filterRole').click(function(e){
         $('.filterMember').remove();
         $('.error').remove();
-        $('.selectRole').remove();
+        $('#selectRole').remove();
         $('.selectMember').remove();
         var target = $(e.target);
         var memberButton = [];
@@ -57,7 +57,7 @@ $(function(){
         target.addClass('selected btn-primary').removeClass('btn-default');
         var roleName = $('.selected')[0].innerHTML;
         var roleId = $('.selected')[0].value;
-        var roleSelect = "<span class='selectRole'>角色:<span data-id="+roleId+" "+"class='select-role'>"+roleName+"</span>></span>";
+        var roleSelect = "<div id='selectRole'><span class='selectRole'>角色:<span data-id="+roleId+" "+"class='select-role'>"+roleName+"</span></span><i class='toright'></i></div>";
         $('#currentOption').append(roleSelect);
         var roleId = $('.selected')[0].value;
         var lineName = $('.select-line')[0].innerHTML;

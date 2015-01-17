@@ -10,7 +10,6 @@ $(document).ready(function(){
         var $lineList = $('.line-list-left');
         if(!results.length){}
         else{
-            console.log(results);
             if(!$lineList) return false;
             if($lineList.length){
                 for(var i=0;i<results.length;i++){

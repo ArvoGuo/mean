@@ -29,8 +29,8 @@ exports.detail = function (req, res) {
 
 //需求后台录入
 exports.new = function (req, res) {
-    var id = req.param.id;
-    Line.find({},function(err,lines){
+    var userId = req.session.user._id;
+    Line.find({members: userId},function(err,lines){
         res.render('issue', {
             title: '需求创建',
             issue: {
