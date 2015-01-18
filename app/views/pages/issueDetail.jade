@@ -1,6 +1,6 @@
 extends ../layout
 block content
-    .container.col-sm-offset-1.col-md-8
+    .content-panel.container.col-sm-offset-2.col-md-8
         form.form-horizontal
             h3.page-header 需求详情
             .form-group
@@ -35,11 +35,13 @@ block content
             .form-group
                 label.tit.col-sm-2.control-label(for="J_CheckIn") 开始日期:
                 .col-sm-5
-                    label.control-label #{moment(issue.start).format('YYYY-MM-DD')}
+                    if issue.start
+                        label.control-label #{moment(issue.start).format('YYYY-MM-DD')}
             .form-group
                 label(for="J_CheckOut").tit.col-sm-2.control-label 结束日期:
                 .col-sm-5
-                    label.control-label #{moment(issue.end).format('YYYY-MM-DD')}
+                    if issue.end
+                        label.control-label #{moment(issue.end).format('YYYY-MM-DD')}
             .form-group
                 label.col-sm-2.control-label 需求状态:
                 .col-sm-5
@@ -64,19 +66,20 @@ block content
                 label.col-sm-2.control-label 需求所需角色:
                 .col-sm-10
                     label.control-label
-                        each val in issue.role
-                            if val == "0"
-                                code PD
-                            if val == "1"
-                                code 交互
-                            if val == "2"
-                                code 视觉
-                            if val == "3"
-                                code 前端
-                            if val == "4"
-                                code 开发
-                            if val == "5"
-                                code 测试
+                        if issue.role.length
+                            each val in issue.role
+                                if val == "0"
+                                    code PD
+                                if val == "1"
+                                    code 交互
+                                if val == "2"
+                                    code 视觉
+                                if val == "3"
+                                    code 前端
+                                if val == "4"
+                                    code 开发
+                                if val == "5"
+                                    code 测试
             .form-group
                 label.col-sm-2.control-label 已认领的角色:
                 .col-sm-10

@@ -29,8 +29,8 @@ exports.detail = function (req, res) {
 
 //需求后台录入
 exports.new = function (req, res) {
-    var id = req.param.id;
-    Line.find({},function(err,lines){
+    var userId = req.session.user._id;
+    Line.find({members: userId},function(err,lines){
         res.render('issue', {
             title: '需求创建',
             issue: {
@@ -55,9 +55,10 @@ exports.new = function (req, res) {
 //需求更新
 exports.update = function (req, res) {
     var id = req.params.id;
+    var userId = req.session.user._id;
     if (id) {
         Issue.findById(id, function (err, issue) {
-            Line.find({},function(err,lines){
+            Line.find({members: userId},function(err,lines){
                 res.render('issue', {
                     title: '需求更新页面',
                     issue: issue,
@@ -72,7 +73,7 @@ exports.update = function (req, res) {
 exports.save = function (req, res) {
     var id = req.body.issue._id;
     var issueObj = req.body.issue;
-    var roleLength = issueObj.role.length;
+    //var roleLength = issueObj.role.length;
     var _issue;
     //如果已创建issue,在这里修改
     if (id) {
@@ -130,13 +131,13 @@ exports.save = function (req, res) {
                 console.log(err)
             }
             if (lineId) {
-                console.log('roleLength:'+roleLength);
-                for(var i=0;i<roleLength;i++){
-                    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
-                }
-                for(var i=0;i<(roleLength-1);i++){
-                    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
-                }
+                //console.log('roleLength:'+roleLength);
+                //for(var i=0;i<roleLength;i++){
+                //    Issue.update({_id:id},{$set:{allocate:[{roleType: role[i],allocated:false,memberId:null}]}}).exec();
+                //}
+                //for(var i=0;i<(roleLength-1);i++){
+                //    Issue.update({_id:id},{$pushAll:{allocate:[{roleType:role[i],allocated:false,memberId:null}]}}).exec();
+                //}
                 Issue.update({_id:id},{$pushAll:{unAllocatedRole:role}}).exec();
                 Issue.update({_id:id},{$set:{url:'/issue/'+id}}).exec();
                 Line.findById(lineId, function(err, line) {
@@ -527,4 +528,9 @@ exports.selectJson = function(req,res){
                 }
             })
     }
+}
+
+//资源占用-我所在的业务线
+exports.selectLine = function(req,res){
+    res.render('relatedLineRole');
 }

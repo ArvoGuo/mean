@@ -1,14 +1,9 @@
-//业务线-资源占用
+//我所在业务线-资源占用
 extends ../layout
 block content
     .container.content-panel
         .row.col-sm-offset-1.col-md-9
-            .col-sm-10(style="margin-top:30px")
-                label.col-sm-4.text-right(style="height:34px;line-height:34px") 输入业务线名称关键词
-                label.col-sm-7
-                    input.form-control.line-name-input(type="text",value)
-                    div#related-line.col-sm-7.form-control(style="height:auto;display:none")
-            .col-sm-10#select-role(style="display:none")
+            .col-sm-10#select-role(style="margin-top:30px")
                 label.col-sm-4.text-right(style="height:34px;line-height:34px") 选择角色
                 label.col-sm-8
                     .btn-group
@@ -33,4 +28,4 @@ block content
     script(src="/libs/fullcalendar/moment.min.js")
     script(src="/libs/fullcalendar/fullcalendar.min.js")
     script(src="/libs/fullcalendar/zh-cn.js")
-    script(src="/js/lineRole.js")
+    script(src="/js/relatedLineRole.js")

@@ -1,14 +1,14 @@
 //业务线-需求列表
 extends ../layout
 block content
-    .container.col-sm-offset-1.col-md-10
-        .row
+    .container.col-sm-offset-2.col-md-9
+        .row(style="margin-top:75px")
             form.form-inline(role="form",method="GET",action="/admin/all/issue/line")
-                label.col-sm-2.col-sm-offset-2.control-label.text-right(style="height:34px;line-height:34px") 输入业务线名称关键词
+                label.col-sm-3.col-sm-offset-1.control-label.text-right(style="height:34px;line-height:34px") 输入业务线名称关键词
                 .col-sm-8
                     input.form-control(style="width:400px",type="text",name="q")
                     button.btn.btn-default(type="submit") 搜索
-    .row.container.col-sm-offset-1.col-md-10(style="margin-top:30px")
+    .row.container.col-sm-offset-2.col-md-9(style="margin-top:30px;margin-left:230px;")
         .tabbable.view
             ul.nav.nav-tabs
                 li.list.active
@@ -28,7 +28,8 @@ block content
                         tbody
                         each issue in issues
                             tr(class="issue-id-#{issue._id}")
-                                td #{issue.belongLineId.name}
+                                td
+                                    a(href="/line/#{issue.belongLineId._id}",style="color:#333;") #{issue.belongLineId.name}
                                 td #{issue.title}
                                 td
                                     if issue.condition == "0"
@@ -64,7 +65,7 @@ block content
                                                 span 测试未认领
                                     else
                                         span 所有角色均认领了需求
-                                td: a.btn.btn-info.btn-xs(target="_blank",href="/issue/#{issue._id}") 查看
+                                td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
                 .tab-pane(id="panel-2").active
                     #calendar(style="margin-top:10px;visibility:hidden;")
     link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")

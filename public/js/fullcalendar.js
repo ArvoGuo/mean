@@ -60,7 +60,7 @@ $(document).ready(function() {
     $('.show-list').click(function(){
         $(this).removeClass('btn-default').addClass('btn-primary');
         $('.show-calendar').removeClass('btn-primary').addClass('btn-default');
-        $('.allocatedList').css('display','block');
+        $('.allocatedList').css('display','');
         $('.calendar').css('display','none');
     })
 });

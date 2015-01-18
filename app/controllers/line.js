@@ -73,11 +73,13 @@ exports.save = function (req, res) {
                 console.log(err)
             }
             _line = _.extend(line, lineObj);
+            var lineArray = []; //登录用户所在的业务线数组
             _line.save(function (err, line) {
                 if (err) {
                     console.log(err)
+                }else{
+                    res.redirect('/line/' + _line.id)
                 }
-                res.redirect('/line/' + _line.id)
             })
         })
     } else {
@@ -88,12 +90,18 @@ exports.save = function (req, res) {
             creator: lineObj.creator,
             members: lineObj.members
         });
+        var lineId = _line._id;
+        var membersArray = lineObj.members;
+        var membersLength = lineObj.members.length;
         //改成下面，对应的jade value也需要改
         //_line = new Line(lineObj);
         _line.save(function (err, line) {
             if (err) {
                 console.log(err)
             }else{
+                for(var i = 0;i<membersLength;i++){
+                    User.update({_id:membersArray[i]},{$push:{lines:lineId}}).exec();
+                }
                 res.redirect('/line/' + _line.id)
             }
         })
@@ -175,6 +183,22 @@ exports.addMember = function(req,res){
             .find({name:new RegExp(newMemberName+'.*','i')},{_id:1,name:1})
             .exec(function(err,users){
                 res.json(users)
+            })
+    }
+}
+
+//左侧资源占用-登录用户所在业务线
+exports.postPersonalLine = function(req,res){
+    var userId = req.session.user._id;
+    if (userId) {
+        //首先找到我在的业务线组
+        Line
+            .find({members: userId})
+            .exec(function (err, lines) {
+                if(err) console.log(err)
+                else{
+                    res.json(lines);
+                }
             })
     }
 }
