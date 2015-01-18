@@ -28,7 +28,8 @@ block content
                         tbody
                         each issue in issues
                             tr(class="issue-id-#{issue._id}")
-                                td #{issue.belongLineId.name}
+                                td
+                                    a(href="/line/#{issue.belongLineId._id}",style="color:#333;") #{issue.belongLineId.name}
                                 td #{issue.title}
                                 td
                                     if issue.condition == "0"

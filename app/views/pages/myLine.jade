@@ -4,7 +4,7 @@ block content
         .row
             ul.line-ul
                 if (!lines.length)
-                    h3 您还未加入任何业务线，请联系产品经理把您加入业务线。
+                    div.col-sm-10.col-sm-offset-1.alert.alert-warning(role="alert",style="margin-top: 30px;") 您还未加入任何业务线，请联系产品经理把您加入业务线。
                 if lines.length
                     each item in lines
                         li.line-ul-li(class="item-id-#{item._id}")
