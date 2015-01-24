@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
 var bodyParser = require('body-parser');
 var logger = require('morgan'); //在vim里打印开发环境日志
+var favicon = require('serve-favicon');
 var port = process.env.PORT || 8000;
 var app = express();
 var dbUrl = 'mongodb://localhost/mean';
@@ -33,6 +34,7 @@ if("development" === app.get("env")){
     mongoose.set("debug",true);
 }
 require('./config/routes')(app);
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.locals.moment = require('moment');
 app.listen(port);
