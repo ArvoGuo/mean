@@ -1,7 +1,10 @@
 #nav-panel.navbar-default.navbar-static-top(role="navigation")
     .container
-        .navbar-header.col-md-2
-            a.navbar-brand(href="/") 资源管理系统
+        .navbar-header.col-md-3
+            a(href="/")
+                span.logo
+            a.navbar-brand(href="/")
+                span 资源管理系统
         .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
                 if user
