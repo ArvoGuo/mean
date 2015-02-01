@@ -6,7 +6,7 @@ block content
             | 需求只能在您加入的业务线下创建，您还未加入任何业务线，请联系产品经理把您加入业务线。
     if(lines.length)
         .container.col-md-offset-3.col-md-8(style="margin-top:50px")
-            form.form-horizontal(method="post" action="/admin/issue")
+            form.form-horizontal(id="defaultForm",role="form",method="post",action="/admin/issue")
                 input(type="hidden",name="issue[creator]",value="#{issue.creator}")
                 if issue._id
                     h3.page-header 编辑需求
@@ -15,15 +15,16 @@ block content
                     h3.page-header 新建需求
                 .form-group
                     label.col-sm-2.control-label 所属业务线
-                    each line in lines
-                        if issue.belongLineId == line.id
-                            label.radio-inline(style="padding-left:34px")
-                                input(type="radio",name="issue[belongLineId]",value=line._id,checked)
-                                | #{line.name}
-                        else
-                            label.radio-inline(style="padding-left:34px")
-                                input(type="radio",name="issue[belongLineId]",value=line._id)
-                                | #{line.name}
+                    .col-sm-10
+                        each line in lines
+                            if issue.belongLineId == line.id
+                                label.radio-inline
+                                    input(type="radio",name="issue[belongLineId]",value=line._id,checked)
+                                    | #{line.name}
+                            else
+                                label.radio-inline
+                                    input(type="radio",name="issue[belongLineId]",value=line._id)
+                                    | #{line.name}
                 .form-group
                     label.col-sm-2.control-label 需求主题
                     .col-sm-10
@@ -88,7 +89,7 @@ block content
                                 option(value="7") 发布
                 .form-group
                     label.col-sm-2.control-label 需求所需角色
-                    .col-sm-10(style="height:26px;line-height:29px")
+                    .col-sm-10(style="margin-top:6px")
                         label.role-select
                             if (issue.role[0] == 0)
                                 input(type="checkbox",name="issue[role]",value="0",checked)
@@ -133,4 +134,5 @@ block content
     link(href="/css/sweet-alert.css",rel="stylesheet")
     script(src="/js/sweet-alert.js")
     script(src="/libs/bootstrap/dist/js/bootstrap-datetimepicker.min.js")
+    script(src="/libs/bootstrap/dist/js/bootstrapValidator.js")
     script(src="/js/issue-datetimepicker.js")

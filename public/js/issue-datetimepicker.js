@@ -16,19 +16,70 @@ $('.datetimepicker').datetimepicker({
 });
 
 //点击提交按钮增加dotting打点，并提示保存成功
-$(function(){
-    $('.postMsg').bind('click',function(e){
-        e.preventDefault();
-        swal({
-            title: "Success!",
-            text: "您已成功保存该需求!",
-            type: "success",
-            timer: 2000
-        });
-        var $target = $(e.target);
-        $target.append('<span class="dotting"></span>');
-        setTimeout(function(){
-            $('form').submit();
-        },2000);
+//$(function(){
+//    $('.postMsg').bind('click',function(e){
+//        e.preventDefault();
+//        swal({
+//            title: "Success!",
+//            text: "您已成功保存该需求!",
+//            type: "success",
+//            timer: 2000
+//        });
+//        var $target = $(e.target);
+//        $target.append('<span class="dotting"></span>');
+//        setTimeout(function(){
+//            $('form').submit();
+//        },2000);
+//    });
+//})
+
+
+$(document).ready(function(){
+    //表单必填项验证
+    $('#defaultForm').bootstrapValidator({
+//        live: 'disabled',
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            'issue[belongLineId]':{
+                validators: {
+                    notEmpty: {
+                        message: '请选择所属业务线'
+                    }
+                }
+            },
+            'issue[title]': {
+                validators: {
+                    notEmpty: {
+                        message: '请填写需求主题'
+                    }
+                }
+            },
+            'issue[start]':{
+                validators: {
+                    notEmpty: {
+                        message: '请填写需求开始日期'
+                    }
+                }
+            },
+            'issue[end]':{
+                validators: {
+                    notEmpty: {
+                        message: '请填写需求结束日期'
+                    }
+                }
+            },
+            'issue[role]':{
+                validators: {
+                    notEmpty: {
+                        message: '请勾选需求所需角色'
+                    }
+                }
+            }
+        }
     });
 })

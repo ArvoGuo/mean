@@ -37,19 +37,46 @@ $(function(){
     });
 
     //点击提交按钮增加dotting打点，并提示保存成功
-    $('.postMsg').bind('click',function(e){
-            e.preventDefault();
-            swal({
-                title: "Success!",
-                text: "您已成功保存该业务线!",
-                type: "success",
-                timer: 2000
-            });
-            var $target = $(e.target);
-            $target.append('<span class="dotting"></span>');
-            setTimeout(function(){
-                $('form').submit();
-            },2000);
+    //$('.postMsg').bind('click',function(e){
+    //        e.preventDefault();
+    //        swal({
+    //            title: "Success!",
+    //            text: "您已成功保存该业务线!",
+    //            type: "success",
+    //            timer: 2000
+    //        });
+    //        var $target = $(e.target);
+    //        $target.append('<span class="dotting"></span>');
+    //        setTimeout(function(){
+    //            $('form').submit();
+    //        },2000);
+    //});
+
+    //表单必填项验证
+    $('#defaultForm').bootstrapValidator({
+//        live: 'disabled',
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            'line[name]':{
+                validators: {
+                    notEmpty: {
+                        message: '请填写业务线名称'
+                    }
+                }
+            },
+            'line[desc]': {
+                validators: {
+                    notEmpty: {
+                        message: '请填写业务线描述'
+                    }
+                }
+            }
+        }
     });
 })
 
