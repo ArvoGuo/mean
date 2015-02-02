@@ -126,6 +126,9 @@ $(function(){
                     window.open(event.url);
                     return false;
                 }
+            },
+            viewRender: function(view,element){
+                alert('new view: ' + view.name);
             }
         });
     }
