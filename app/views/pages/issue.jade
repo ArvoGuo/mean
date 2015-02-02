@@ -37,20 +37,20 @@ block content
                     .form-group
                         label.col-sm-2.control-label(for="dtp_input3") 开始日期
                         .col-sm-5(data-link-field="dtp_input3")
-                            input.datetimepicker.form-control(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY-MM-DD')}",readonly)
+                            input.datetimepicker.datetimepicker1.form-control(type="text",name="issue[start]",value="#{moment(issue.start).format('YYYY-MM-DD')}",readonly)
                     .form-group
                         label.col-sm-2.control-label(for="dtp_input4") 结束日期
                         .col-sm-5(data-link-field="dtp_input4")
-                            input.datetimepicker.form-control(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY-MM-DD')}",readonly)
+                            input.datetimepicker.datetimepicker2.form-control(type="text",name="issue[end]",value="#{moment(issue.end).format('YYYY-MM-DD')}",readonly)
                 else
                     .form-group
                         label.col-sm-2.control-label(for="dtp_input1") 开始日期
                         div.col-sm-5(data-link-field="dtp_input1")
-                            input.datetimepicker.form-control(type="text",name="issue[start]",value=issue.start,readonly)
+                            input.datetimepicker.datetimepicker1.form-control(type="text",name="issue[start]",value=issue.start,readonly)
                     .form-group(for="dtp_input2")
                         label.col-sm-2.control-label 结束日期
                         .col-sm-5(data-link-field="dtp_input2")
-                            input.datetimepicker.form-control(type="text",name="issue[end]",value=issue.end,readonly)
+                            input.datetimepicker.datetimepicker2.form-control(type="text",name="issue[end]",value=issue.end,readonly)
                 .form-group
                     label.col-sm-2.control-label 需求状态
                     .col-sm-5
@@ -130,7 +130,6 @@ block content
                     .col-sm-offset-2.col-sm-10
                         button.postMsg.btn.btn-default(type="submit") 保存
     link(href="/libs/bootstrap/dist/css/bootstrap-datetimepicker.min.css",rel="stylesheet")
-    link(href="/css/dotting.css",rel="stylesheet")
     link(href="/css/sweet-alert.css",rel="stylesheet")
     script(src="/js/sweet-alert.js")
     script(src="/libs/bootstrap/dist/js/bootstrap-datetimepicker.min.js")
