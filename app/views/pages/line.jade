@@ -1,7 +1,7 @@
 extends ../layout
 block content
     .container.col-md-offset-3.col-md-8(style="margin-top:50px")
-        form.form-horizontal(role="form",method="post",action="/admin/line")
+        form.form-horizontal(id="defaultForm",role="form",method="post",action="/admin/line")
             h3.page-header #{title}
             input(type="hidden",name="line[_id]",value="#{line._id}")
             input(type="hidden",name="line[creator]",value="#{line.creator}")
@@ -32,7 +32,7 @@ block content
             .form-group
                 .col-sm-offset-2.col-sm-10
                     button.postMsg.btn.btn-default(type="submit") 保存
-    link(href="/css/dotting.css",rel="stylesheet")
     link(href="/css/sweet-alert.css",rel="stylesheet")
     script(src="/js/sweet-alert.js")
+    script(src="/libs/bootstrap/dist/js/bootstrapValidator.js")
     script(src="/js/addNewMember.js")

@@ -1,7 +1,7 @@
 /**
  * Created by cassie on 14/12/24.
  */
-$(function(){
+$(document).ready(function(){
     //填写成员花名时，发送花名并返回用户id
     $('.new-member-input').on('keyup',function(e){
         var $target = $(e.target);
@@ -36,20 +36,40 @@ $(function(){
             })
     });
 
-    //点击提交按钮增加dotting打点，并提示保存成功
-    $('.postMsg').bind('click',function(e){
-            e.preventDefault();
+
+    //表单必填项验证
+    $('#defaultForm')
+        .bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            'line[name]':{
+                validators: {
+                    notEmpty: {
+                        message: '请填写业务线名称'
+                    }
+                }
+            },
+            'line[desc]': {
+                validators: {
+                    notEmpty: {
+                        message: '请填写业务线描述'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function(e, field) {
+            //提示保存成功
             swal({
                 title: "Success!",
                 text: "您已成功保存该业务线!",
                 type: "success",
                 timer: 2000
             });
-            var $target = $(e.target);
-            $target.append('<span class="dotting"></span>');
-            setTimeout(function(){
-                $('form').submit();
-            },2000);
     });
 })
 

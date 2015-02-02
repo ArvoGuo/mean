@@ -1,7 +1,6 @@
 /**
  * 业务线
  */
-var mongoose = require('mongoose');
 var Line = require('../models/line');
 var User = require('../models/user');
 var _ = require('underscore');
@@ -90,18 +89,18 @@ exports.save = function (req, res) {
             creator: lineObj.creator,
             members: lineObj.members
         });
-        var lineId = _line._id;
-        var membersArray = lineObj.members;
-        var membersLength = lineObj.members.length;
+        //var lineId = _line._id;
+        //var membersArray = lineObj.members;
+        //var membersLength = lineObj.members.length;
         //改成下面，对应的jade value也需要改
         //_line = new Line(lineObj);
         _line.save(function (err, line) {
             if (err) {
                 console.log(err)
             }else{
-                for(var i = 0;i<membersLength;i++){
-                    User.update({_id:membersArray[i]},{$push:{lines:lineId}}).exec();
-                }
+                //for(var i = 0;i<membersLength;i++){
+                //    User.update({_id:membersArray[i]},{$push:{lines:lineId}}).exec();
+                //}
                 res.redirect('/line/' + _line.id)
             }
         })

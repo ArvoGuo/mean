@@ -1,7 +1,6 @@
 /**
  * 需求集合
  */
-var mongoose = require('mongoose');
 var Issue = require('../models/issue');
 var Line = require('../models/line');
 var User = require('../models/user');
