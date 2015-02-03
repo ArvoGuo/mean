@@ -1,9 +1,7 @@
-doctype
-head
-	mete(charset="utf-8")
-	title #{title}
+doctype html
+html
 	include ./includes/head
-body
-	include ./includes/header
-	include ./pages/nav
-	block content
+	body
+		include ./includes/header
+		include ./pages/nav
+		block content

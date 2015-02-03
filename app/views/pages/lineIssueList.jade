@@ -66,8 +66,43 @@ block content
                                     else
                                         span 所有角色均认领了需求
                                 td: a.btn.btn-info.btn-xs(href="/issue/#{issue._id}") 查看
-                .tab-pane(id="panel-2").active
-                    #calendar(style="margin-top:10px;visibility:hidden;")
+                    //分页
+                    .span12
+                        ul.pagination
+                            li
+                                if q
+                                    a(href="/admin/all/issue/line?q=#{q}&?p=0")
+                                        span(aria-hidden="true") &laquo;
+                                        span.sr-only Previous
+                                else
+                                    a(href="/admin/all/issue/line?p=0")
+                                        span(aria-hidden="true") &laquo;
+                                        span.sr-only Previous
+                            - for (var i = 0; i < ((totalPage > 5) ? 5 : totalPage); i++){
+                                if (currentPage == (i+1))
+                                    li.active
+                                        span #{currentPage}
+                                else
+                                    li
+                                        if q
+                                            a(href="/admin/all/issue/line?q=#{q}&?p=#{i}") #{i+1}
+                                        else
+                                            a(href="/admin/all/issue/line?p=#{i}") #{i+1}
+                                - }
+                            if(totalPage>5)
+                                li
+                                    a ...
+                            li
+                                if q
+                                    a(href="/admin/all/issue/line?q=#{q}&?p=#{totalPage-1}")
+                                        span(aria-hidden="true") &raquo;
+                                        span.sr-only Next
+                                else
+                                    a(href="/admin/all/issue/line?p=#{totalPage - 1}")
+                                        span(aria-hidden="true") &raquo;
+                                        span.sr-only Next
+                .tab-pane.active(id="panel-2",style="display:none")
+                    #calendar(style="margin-top:10px;")
     link(href="/libs/fullcalendar/fullcalendar.min.css",rel="stylesheet")
     script(src="/libs/fullcalendar/moment.min.js")
     script(src="/libs/fullcalendar/fullcalendar.min.js")
