@@ -55,9 +55,10 @@ $(document).ready(function() {
     }
 
     $('.list').click(function(){
-        $('#calendar').css('visibility','hidden')
+        $('#panel-2').css('display','none');
     });
     $('.calendar').click(function(){
-        $('#calendar').css('visibility','visible')
+        $('#panel-2').css('display','');
+        $('#calendar').fullCalendar('render');
     })
 })

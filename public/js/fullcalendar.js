@@ -1,5 +1,6 @@
 /**
  * Created by cassie on 14/12/2.
+ * 我的任务页面
  */
 $(document).ready(function() {
     //fullcalendar日历组件调用
@@ -62,6 +63,6 @@ $(document).ready(function() {
         $('.show-calendar').removeClass('btn-primary').addClass('btn-default');
         $('.allocatedList').css('display','');
         $('.calendar').css('display','none');
-    })
+    });
 });
 

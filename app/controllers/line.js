@@ -136,7 +136,7 @@ exports.del = function (req, res) {
     }
 };
 
-//我所在的业务线
+//我的业务线
 exports.my = function (req, res) {
     //查找我所在的业务线，罗列出所有需求
     var userId = req.session.user._id;
@@ -147,6 +147,7 @@ exports.my = function (req, res) {
             .find({members: userId})
             .populate('members', 'name')
             .populate('creator', 'name')
+            .sort({_id: -1})
             .exec(function (err, lines) {
                 res.render('myLine', {
                     title: '我的主页-业务线',
@@ -174,7 +175,7 @@ exports.exit = function (req, res) {
     }
 }
 
-//增加新成员
+//修改业务线-增加新成员
 exports.addMember = function(req,res){
     var newMemberName = req.query.name;
     if(newMemberName){

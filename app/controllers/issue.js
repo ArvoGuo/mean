@@ -154,11 +154,12 @@ exports.save = function (req, res) {
     }
 };
 
-//需求列表页
+//管理员-需求列表页
 exports.list = function (req, res) {
     Issue
         .find({})
         .populate('belongLineId','name')
+        .sort({_id:-1})
         .exec(function(err,issues){
             if(err){
                 console.log(err)
@@ -197,6 +198,11 @@ exports.my = function(req,res){
     //查找我所在的业务线，罗列出所有需求
     var userId = req.session.user._id;
     var userRole = req.session.user.role;
+    //当不存在p参数时，默认展示第一页数据
+    var page = parseInt(req.query.p,10) || 0;
+    //每页显示的数据条数
+    var count = 10;
+    var index = page * count;
     //如果登陆者在业务线内
     if (userId){
         //首先找到我在的业务线组
@@ -212,14 +218,20 @@ exports.my = function(req,res){
             //我认领的需求
             Issue
                 .find({belongLineId:{$in:lineIdArray},role:{"$in":[userRole]},members:{$in:[userId]}})
-                .populate('belongLineId','name')
+                .populate({path:'belongLineId',select:'name'})
+                .sort({_id: -1})
                 .exec(function(err,issues){
+                    //获取每页数据
+                    var results = issues.slice(index,index+count);
                     if(err){
                         console.log(err)
                     }else{
                         res.render('myIssueList',{
                             title: '我的需求列表',
-                            issues: issues
+                            currentPage: (page+1),
+                            //向上舍入取整
+                            totalPage: Math.ceil(issues.length/count),
+                            issues: results
                         })
                     }
                 })
@@ -227,7 +239,7 @@ exports.my = function(req,res){
     }
 }
 
-//获取我认领的需求json数组
+//我认领的需求json数组
 exports.myAllocatedJson = function(req,res){
     //查找我所在的业务线，罗列出所有需求
     var userId = req.session.user._id;
@@ -281,6 +293,7 @@ exports.myIssueUnallocated = function(req,res){
             Issue
                 .find({belongLineId:{$in:lineIdArray},unAllocatedRole:{$in:[userRole]},members:{$nin:[userId]}})
                 .populate('belongLineId','name')
+                .sort({_id: -1})
                 .exec(function(err,issues){
                     res.render('myIssueUnallocated',{
                         title: '我的需求列表',
@@ -291,7 +304,7 @@ exports.myIssueUnallocated = function(req,res){
     }
 }
 
-//获取我未认领的需求json数组
+//我未认领的需求json数组
 exports.myUnallocatedJson = function(req,res){
     //查找我所在的业务线，罗列出所有需求
     var userId = req.session.user._id;
@@ -349,6 +362,11 @@ exports.allocate = function(req,res){
 //业务线-需求列表
 exports.all = function(req,res){
     var q = req.query.q;
+    //当不存在p参数时，默认展示第一页数据
+    var page = parseInt(req.query.p,10) || 0;
+    //每页显示的数据条数
+    var count = 10;
+    var index = page * count;
     //查找到业务线名字和关键词相同的所有业务
     if(q){
         //正则匹配关键字
@@ -364,13 +382,20 @@ exports.all = function(req,res){
             Issue
                 .find({belongLineId:{$in:lineIdArray}})
                 .populate('belongLineId','name')
+                .sort({_id:-1})
                 .exec(function(err,issues){
+                    //获取每页数据
+                    var results = issues.slice(index,index+count);
                     if(err){
                         console.log(err)
                     }else{
                         res.render('lineIssueList',{
+                            q: q,
                             title: '业务线-需求列表',
-                            issues: issues
+                            currentPage: (page+1),
+                            //向上舍入取整
+                            totalPage: Math.ceil(issues.length/count),
+                            issues: results
                         })
                     }
                 })
@@ -380,13 +405,19 @@ exports.all = function(req,res){
             Issue
                 .find({})
                 .populate('belongLineId','name')
+                .sort({_id:-1})
                 .exec(function(err,issues){
+                    //获取每页数据
+                    var results = issues.slice(index,index+count);
                     if(err){
                         console.log(err)
                     }else{
                         res.render('lineIssueList',{
-                            title: '业务线-需求列表',
-                            issues: issues
+                            title: '需求列表',
+                            currentPage: (page+1),
+                            //向上舍入取整
+                            totalPage: Math.ceil(issues.length/count),
+                            issues: results
                         })
                     }
                 })

@@ -128,7 +128,7 @@ $(function(){
                 }
             },
             viewRender: function(view,element){
-                alert('new view: ' + view.name);
+                //alert('new view: ' + view.name);
             }
         });
     }
