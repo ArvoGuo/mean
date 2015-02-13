@@ -28,11 +28,17 @@
 
 ## 使用
 - 注册用户
+![](C8B455DA-F5AC-4D02-B074-E72D9BF6BD26.png)
 - 登录
+![](12F5B8F0-9D4A-4C28-BFEE-0E92B8230E79.png)
 - 创建业务线
+![](B0D55CBE-7F20-4E4B-A6FA-6B1F9AD011CE.png)
 - 创建需求
+![](F6787BF8-9028-4C74-BB16-62EA2E39DC19.png)
 - 查看我的任务
+![](64B6EDB0-8E98-4C51-8C09-12052D03BDBA.png)
 - 查看资源占用情况
+![](1F419B34-B83A-4EB4-A6D3-CEC565AF9051.png)
 
 ## 快速上手
 - git clone https://github.com/xuyuan923/mean.git
